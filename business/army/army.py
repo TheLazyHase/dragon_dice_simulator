@@ -1,5 +1,6 @@
 from business.dice.face import Face
 from math import floor
+from business.effect import RacialMalusChoiceEffect
 
 class Army(object):
     def __init__(self):
@@ -56,11 +57,11 @@ class Army(object):
             Face.ICON_SAVE: 0,
         }
 
-        #Racial multiplier
-        self.racial_multiplier = []
+        #Racial multiplier or substitution
+        self.racial_modifier = {}
 
-        #Racial substitution
-        self.racial_substitution = []
+        #Racial substitution are put in this again to make thing simpler
+        self.racial_substitution = {}
 
         self.effect = []
 
@@ -139,16 +140,17 @@ class Army(object):
         return self
 
     def reset_racial_multiplier(self):
-        self.racial_multiplier = []
+        self.racial_modifier = []
 
     def add_racial_multiplier(self, race, icon_type):
-        self.racial_multiplier.append({'race': race, 'doubled_icon': icon_type})
-
-    def reset_racial_substitution(self):
-        self.racial_substitution = []
-
+        self.racial_modifier[icon_type][race].append('x2')
+        return self
+            
     def add_racial_substitution(self, race, icon_type_from, icon_type_to):
-        self.racial_substitution.append({'race': race, 'icon_from': icon_type_from, 'icon_to': icon_type_to})
+        self.racial_modifier[icon_type_from][race].append(icon_type_to)
+        self.racial_substitution[icon_type_to][race].append(icon_type_from)
+        return self
+
 
     def modifier_description(self, icon_type):
         result = ''
@@ -217,22 +219,77 @@ class Army(object):
 
     #desired_race is used to get result for a particular race
     #it does not use racial icon replacement, because it is used by racial icon replacement, and this could lead to infinite loop
-    def get_result(self, icon_type, desired_race=None, count_id = True):
+    def get_result(self, icon_type, desired_race=None):
         result = 0
         result_by_race = {}
 
-        if (count_id):
-            ID_multiplier = 1
-        else:
-            ID_multiplier = 0
         #Non SAI result
         for dice in self.components:
-            result += dice.get_result(icon_type, Face.TYPE_NORMAL) + ID_multiplier * dice.get_result(icon_type, Face.TYPE_ID)
+            result += dice.get_result(icon_type, Face.TYPE_NORMAL) + dice.get_result(icon_type, Face.TYPE_ID)
             if (dice.race in result_by_race):
-                result_by_race[dice.race] += dice.get_result(icon_type, Face.TYPE_NORMAL) + ID_multiplier * dice.get_result(icon_type, Face.TYPE_ID)
+                result_by_race[dice.race] += dice.get_result(icon_type, Face.TYPE_NORMAL) + dice.get_result(icon_type, Face.TYPE_ID)
             else:
-                result_by_race[dice.race] = dice.get_result(icon_type, Face.TYPE_NORMAL) + ID_multiplier * dice.get_result(icon_type, Face.TYPE_ID)
-        result = result - self.malus[icon_type]
+                result_by_race[dice.race] = dice.get_result(icon_type, Face.TYPE_NORMAL) + dice.get_result(icon_type, Face.TYPE_ID)
+
+        #Malus
+        result -= self.malus[icon_type]
+        #Now, apply malus to race
+
+        # @TODO : take into account choice made (and saved as an effect)
+        #First case : only one race, we apply the malus to it
+        if len(result_by_race.keys()) < 2:
+            for race in result_by_race.keys():
+                result_by_race[race] -= self.malus[icon_type]
+                if result_by_race[race] < 0:
+                    result_by_race[race] = 0
+        else:
+            #Complicated thing start, since we have multiple race
+            remaining_malus = self.malus[icon_type]
+            race_with_relevant_racial = []
+            #We start by trying to remove the malus from races who have no relevant racial bonus
+            for race in result_by_race.keys():
+                #Once the remaining_malus is liquidated, we can just skip all that.
+                if remaining_malus > 0:
+                    if (not icon_type in self.racial_modifier):
+                        #No racial on the icon type ? Malus can be put anywhere.
+                        if (remaining_malus < result_by_race[race]):
+                            result_by_race[race] -= remaining_malus
+                            remaining_malus = 0
+                        else:
+                            remaining_malus -= result_by_race[race]
+                            result_by_race[race] = 0
+                    elif (not race in self.racial_modifier[icon_type]):
+                        #This race have no relevant racial ? Malus can be put on it
+                        if (remaining_malus < result_by_race[race]):
+                            result_by_race[race] -= remaining_malus
+                            remaining_malus = 0
+                        else:
+                            remaining_malus -= result_by_race[race]
+                            result_by_race[race] = 0
+                    elif (('x2' not in self.racial_modifier[icon_type][race]) and (self.racial_modifier[icon_type][race] not in self.type_roll.allowed_icon)):
+                        #This is a racial that substitute current icon to useless icon for the roll. Malus can be put on it
+                        if (remaining_malus < result_by_race[race]):
+                            result_by_race[race] -= remaining_malus
+                            remaining_malus = 0
+                        else:
+                            remaining_malus -= result_by_race[race]
+                            result_by_race[race] = 0
+                    else:
+                        #This race have (at least) one racial relevant to the situation at hand.
+                        race_with_relevant_racial.append(race)
+            if remaining_malus > 0:
+                if len(race_with_relevant_racial) == 0:
+                    #No race remaining for the malus
+                    pass
+                elif len(race_with_relevant_racial) == 1:
+                    #Only one race with relevant racial, must put malus on it
+                    #We purposefully don't substract remaining malus, so that the player see the total count for thoses
+                    result_by_race[race] -= remaining_malus
+                    if result_by_race[race] < 0:
+                        result_by_race[race] = 0
+                else:
+                    #Choice cannot be done automatically so add a effect for that
+                    self.effect.append(RacialMalusChoiceEffect(remaining_malus, relevant_race))
         #Diviser
         result = floor(result/self.regular_diviser[icon_type])
         for race, total in result_by_race.items():
@@ -263,30 +320,26 @@ class Army(object):
         for race, total in result_by_race.items():
             result_by_race[race] = total * self.special_multiplier[icon_type]
         #Racial multiplier
-        #We consider each and every racial multiplier to be x2
-        #We also consider that malus are substracted from the other races when possible
-        #(I.E., if they are more remaining result than racially generated result, we consider all racially generated result have been kept)
-        #This cause two bugs :
-        # * malus can be considered removed from SAI result of other races
-        # * on counter-maneuver in highland, treefolk and dwarves both have a x2 on maneuver, and then treefolk consider dwarves to have absorbed malus, while dwarve consider the opposite
-        for racial in self.racial_multiplier:
-            if (racial['doubled_icon'] == icon_type):
-                result += min(result_by_race[racial['race']], result)
+        if (icon_type in self.racial_modifier):
+            for race in self.racial_modifier.items():
+                if ('x2' in racials):
+                    result += result_by_race[racial['race']]
 
-        #Now, racial substitution
-        for racial in self.racial_substitution:
-            #We do not check for racial substitution if we are checking icon for a racial substitution
-            if (desired_race == None):
-                if (racial['icon_to'] == icon_type):
-                    result += self.get_result(racial['icon_from'], desired_race=racial['race'], count_id=False)
+        #Racial substitution
+        if (icon_type in self.racial_substitution):
+            for race, racial in self.racial_substitution.items():
+                for icon_from in racial:
+                    result += self.get_result(icon_from, desired_race=race)
         #Additive bonus
-        result = result + self.bonus[icon_type]
+        #If we want race-based result, we switch the total with the racial total
+        if (desired_race == None):
+            result = result + self.bonus[icon_type]
+        else:
+            result = result_by_race[desired_race] + self.bonus[icon_type]
+
+        #Sanity check
         if (result < 0):
             result = 0
-
-        #If we want race-based result, we switch the total with the racial total
-        if (desired_race != None):
-            result = result_by_race[desired_race] + self.bonus[icon_type]
 
         return int(floor(result))
 

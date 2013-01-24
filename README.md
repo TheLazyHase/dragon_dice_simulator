@@ -3,6 +3,13 @@ dragon_dice_simulator
 
 Something about dragons. And dices.
 
+For requirement, I advice to use virtualenv:
+
+sudo apt-get install virtualenv
+virtualenv .
+. bin/activate
+pip install pyramid
+
 * comment may often be in engrish.
 * the code have not sanity-checked yet, so it may have some cosmic horror lurking in some classes
 * roll.py is the file in which I dump my tests to se if everything work, it's not something needed for the thing to work.
