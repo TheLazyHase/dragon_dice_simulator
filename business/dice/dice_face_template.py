@@ -4,8 +4,8 @@ from business.dice import face as faceDefinition
 from business.dice.dice import Dice
 
 class DiceFaceTemplate(object):
-    def __init__(self, dice_id, side_number, class_name, amount, picture):
-        self.dice_id = dice_id
+    def __init__(self, dice, side_number, class_name, amount, picture):
+        self.dice = dice
         self.side_number = side_number
         self.class_name = class_name
         self.amount = amount

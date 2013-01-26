@@ -3,11 +3,13 @@ from random import choice
 from face import Face
 
 class Dice(object):
-    def __init__(self, title, race, faces, autosave=0, automelee=0, automissile=0, automaneuver=0, automagic=0):
+    def __init__(self, title, race, faces, health, elements, autosave=0, automelee=0, automissile=0, automaneuver=0, automagic=0):
         self.active_faces = None
         self.race = race
         self.faces = faces
         self.title = title
+        self.health = health
+        self.elements = elements
         self.id = 0
 
         self.autoresult = {
@@ -33,13 +35,13 @@ class Dice(object):
 
     @property
     def name(self):
-        return "%s %s (#%s)" % (self.race, self.title, self.id)
+        return "%s %s (#%s, %s health, %s)" % (self.race.name, self.title, self.id, self.health, '/'.join([element.name for element in self.elements]))
 
     @property
     def description(self):
         description_list = []
         for face in self.faces:
-            description_list.append(face.name)
+            description_list.append('<img src="http://www.sfr-inc.com/'+face.picture+'" /> '+face.name)
         return self.name+"<br />"+"<br />".join(description_list)
 
     @property
