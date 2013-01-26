@@ -4,4 +4,4 @@
 test condition !
 % endif
 
-${ name }
+${ name | n }

@@ -36,6 +36,13 @@ class Dice(object):
         return "%s %s (#%s)" % (self.race, self.title, self.id)
 
     @property
+    def description(self):
+        description_list = []
+        for face in self.faces:
+            description_list.append(face.name)
+        return self.name+"<br />"+"<br />".join(description_list)
+
+    @property
     def result_description(self):
         description = []
         for active_face in self.active_faces:
