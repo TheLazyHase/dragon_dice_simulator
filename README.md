@@ -13,6 +13,13 @@ pip install pyramid
 pip install sqlalchemy
 pip install MySQL-python
 
+After that, you need to create the settings.py file. Copy the settings.py.template, change the valure to match your database.
+Then, initialize the db :
+python db_initialization.py
+
+If like me you have data from the SFR DBs, there is a conversion script :
+python db_conversion.py
+
 * comment may often be in engrish.
 * the code have not sanity-checked yet, so it may have some cosmic horror lurking in some classes
 * roll.py is the file in which I dump my tests to se if everything work, it's not something needed for the thing to work.
