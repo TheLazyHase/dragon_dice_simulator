@@ -20,7 +20,9 @@ if __name__ == '__main__':
     import models
 
     #Add route here
-    config.add_route('army_creation', '/army/creation')
+    config.add_route('army_selection', '/army/selection')
+    config.add_route('army_creation', '/army/new', request_method="POST")
+    config.add_route('army_modification', '/army/{id}')
 
     #Scan for route
     config.scan('controller')

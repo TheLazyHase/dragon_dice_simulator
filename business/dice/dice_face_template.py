@@ -17,3 +17,10 @@ class DiceFaceTemplate(object):
         face.side_number = self.side_number
         face.picture = self.picture
         return face
+
+    #A bit convoluted :x
+    @property
+    def name(self):
+        face_class = getattr(faceDefinition, self.class_name)
+        face = face_class(self.amount)
+        return face.name

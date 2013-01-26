@@ -23,6 +23,13 @@ def get_all(cls):
 def get_by_id(cls, id):
     return DBSession.query(cls).get(id)
 
+def save(self, explicit=False):
+    DBSession.add(self)
+    if explicit:
+        DBSession.flush()
+    return self
+    
+
 from models.element import element_mapper
 element_mapper()
 
@@ -34,4 +41,13 @@ dice_type_mapper()
 
 from models.dice_template import dice_template_mapper
 dice_template_mapper()
+
+from models.army import army_mapper
+army_mapper()
+
+from models.position import position_mapper
+position_mapper()
+
+from models.dice import dice_mapper
+dice_mapper()
 

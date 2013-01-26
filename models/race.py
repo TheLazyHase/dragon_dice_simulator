@@ -18,11 +18,12 @@ race_table = Table('race', metadata,
 )
 
 def race_mapper():
-    from models import get_all, get_by_id
+    from models import get_all, get_by_id, save
     from business.race import Race
     from sqlalchemy.orm import mapper, relationship
 
     Race.get_all = classmethod(get_all)
     Race.get_by_id = classmethod(get_by_id)
+    Race.save = save
 
     mapper(Race, race_table, properties={})

@@ -2,22 +2,26 @@ from random import choice
 
 from face import Face
 
-class Dice(object):
-    def __init__(self, title, race, faces, health, elements, autosave=0, automelee=0, automissile=0, automaneuver=0, automagic=0):
-        self.active_faces = None
-        self.race = race
-        self.faces = faces
-        self.title = title
-        self.health = health
-        self.elements = elements
-        self.id = 0
+from sqlalchemy.orm import reconstructor
 
+class Dice(object):
+    def __init__(self, template, army, nickname=''):
+        self.active_faces = None
+        self.nickname = nickname
+        self.template = template
+        self.army = army
+        self.id = 0
+        self.hydrate()
+
+    @reconstructor
+    def hydrate(self):
+        self.faces = self.template.get_instancied_faces()
         self.autoresult = {
-            Face.ICON_MELEE: automelee,
-            Face.ICON_MISSILE: automissile,
-            Face.ICON_MANEUVER: automaneuver,
-            Face.ICON_MAGIC: automagic,
-            Face.ICON_SAVE: autosave,
+            Face.ICON_MELEE: self.template.automelee,
+            Face.ICON_MISSILE: self.template.automissile,
+            Face.ICON_MANEUVER: self.template.automaneuver,
+            Face.ICON_MAGIC: self.template.automagic,
+            Face.ICON_SAVE: self.template.autosave,
         }
 
     def roll(self, type_roll):
@@ -35,14 +39,27 @@ class Dice(object):
 
     @property
     def name(self):
-        return "%s %s (#%s, %s health, %s)" % (self.race.name, self.title, self.id, self.health, '/'.join([element.name for element in self.elements]))
+        if self.nickname != '':
+            name = self.nickname+' ,'+(self.template.title % self.id)
+        else:
+            name = (self.template.title % self.id)
+        return name
+
+    @property
+    def health(self):
+        return self.template.type.health
+
+    @property
+    def race(self):
+        return self.template.race
+
+    @property
+    def elements(self):
+        return self.template.elements
 
     @property
     def description(self):
-        description_list = []
-        for face in self.faces:
-            description_list.append('<img src="http://www.sfr-inc.com/'+face.picture+'" /> '+face.name)
-        return self.name+"<br />"+"<br />".join(description_list)
+        return self.name+self.template.face_description
 
     @property
     def result_description(self):
@@ -53,8 +70,6 @@ class Dice(object):
 
     def get_result(self, icon_type, result_type = None):
         result = 0
-        if (result_type == None or result_type == Face.TYPE_NORMAL):
-            result += self.autoresult[icon_type]
         for active_face in self.active_faces:
             if (result_type == None or result_type == active_face.type):
                 result += active_face.icon_by_type(icon_type)

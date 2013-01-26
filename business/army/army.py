@@ -3,8 +3,9 @@ from math import floor
 from business.effect import RacialMalusChoiceEffect
 
 class Army(object):
-    def __init__(self):
+    def __init__(self, position=None):
         self.components = []
+        self.position = position
 
         #Modifiers
         self.malus = {
@@ -68,9 +69,12 @@ class Army(object):
     def add(self, dice):
         self.components.append(dice)
 
-    #TBI
-    def remove():
-        pass
+    def remove(self, dices):
+        updated_dice_list = []
+        for dice in self.component:
+            if not (dice in dices):
+                updated_dice_list.append(dice)
+        self.components = updated_dice_list
 
     @property
     def result_description(self):
@@ -226,10 +230,10 @@ class Army(object):
         #Non SAI result
         for dice in self.components:
             result += dice.get_result(icon_type, Face.TYPE_NORMAL) + dice.get_result(icon_type, Face.TYPE_ID)
-            if (dice.race in result_by_race):
-                result_by_race[dice.race] += dice.get_result(icon_type, Face.TYPE_NORMAL) + dice.get_result(icon_type, Face.TYPE_ID)
+            if (dice.race.tag in result_by_race):
+                result_by_race[dice.race.tag] += dice.get_result(icon_type, Face.TYPE_NORMAL) + dice.get_result(icon_type, Face.TYPE_ID)
             else:
-                result_by_race[dice.race] = dice.get_result(icon_type, Face.TYPE_NORMAL) + dice.get_result(icon_type, Face.TYPE_ID)
+                result_by_race[dice.race.tag] = dice.get_result(icon_type, Face.TYPE_NORMAL) + dice.get_result(icon_type, Face.TYPE_ID)
 
         #Malus
         result -= self.malus[icon_type]
@@ -306,10 +310,10 @@ class Army(object):
         #SAI result, which are unaffected by spell, breath, and SAI are added now
         for dice in self.components:
             result = result + dice.get_result(icon_type, Face.TYPE_SAI)
-            if (dice.race in result_by_race):
-                result_by_race[dice.race] += dice.get_result(icon_type, Face.TYPE_SAI)
+            if (dice.race.tag in result_by_race):
+                result_by_race[dice.race.tag] += dice.get_result(icon_type, Face.TYPE_SAI)
             else:
-                result_by_race[dice.race] = dice.get_result(icon_type, Face.TYPE_SAI)
+                result_by_race[dice.race.tag] = dice.get_result(icon_type, Face.TYPE_SAI)
 
         #Land diviser (catastrophs on minor terrain)
         result = floor(result/self.special_diviser[icon_type])
@@ -330,10 +334,14 @@ class Army(object):
             for race, racial in self.racial_substitution.items():
                 for icon_from in racial:
                     result += self.get_result(icon_from, desired_race=race)
-        #Additive bonus
+        #dice-wide additive bonus (dragonkin autosave)
+        for dice in self.components:
+            result += dice.autoresult[icon_type]
+            result[dice.race.tag] += dice.autoresult[icon_type]
+        #Army-wide additive bonus
         #If we want race-based result, we switch the total with the racial total
         if (desired_race == None):
-            result = result + self.bonus[icon_type]
+            result += self.bonus[icon_type]
         else:
             result = result_by_race[desired_race] + self.bonus[icon_type]
 

@@ -83,4 +83,15 @@ DBSession.add(dragonkin)
 eldarim = Race('Eldarim', 'Eldarim', 'el')
 DBSession.add(eldarim)
 
+from business.army.position import ArmyPosition
+
+regular = ArmyPosition('Army')
+DBSession.add(regular)
+reserve = ArmyPosition('Reserve Area', is_reserve=True)
+DBSession.add(reserve)
+dua = ArmyPosition('Dead Unit Area', is_dead=True)
+DBSession.add(dua)
+bua = ArmyPosition('Buried Unit Area', is_buried=True)
+DBSession.add(bua)
+
 DBSession.flush()

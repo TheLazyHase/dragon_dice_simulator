@@ -17,11 +17,12 @@ element_table = Table('element', metadata,
 )
 
 def element_mapper():
-    from models import get_all, get_by_id
+    from models import get_all, get_by_id, save
     from business.element import Element
     from sqlalchemy.orm import mapper, relationship
 
     Element.get_all = classmethod(get_all)
     Element.get_by_id = classmethod(get_by_id)
+    Element.save = save
 
     mapper(Element, element_table, properties={})

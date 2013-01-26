@@ -16,10 +16,26 @@ class DiceTemplate(object):
         self.automagic = automagic
         self.autosave = autosave
 
-    def get_instance(self):
-        face = []
+        self.elements = []
+
+    def get_instancied_faces(self):
+        faces = []
         for face_template in self.faces:
-            face.append(face_template.get_instance())
-        dice = Dice(self.name, self.race, face, self.type.health, self.elements)
-        dice.id = self.id
-        return dice
+            faces.append(face_template.get_instance())
+        return faces        
+
+    @property
+    def title(self):
+        title = ("%s %s (#" % (self.race.name, self.name))+"%s"+(", %s" % self.type.name)
+        if (len(self.elements) > 0):
+            title += ", %s)" % '/'.join([element.name for element in self.elements])
+        else:
+            title += ")"
+        return title
+
+    @property
+    def face_description(self):
+        description_list = []
+        for face in self.faces:
+            description_list.append('<img src="http://www.sfr-inc.com/'+face.picture+'" /> '+face.name)
+        return "<br />"+"<br />".join(description_list)
