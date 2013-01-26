@@ -1,0 +1,4 @@
+db_user = 'python'
+db_password = 'your password here'
+db_host = 'localhost'
+db_name = 'db name'

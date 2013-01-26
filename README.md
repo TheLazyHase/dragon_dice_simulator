@@ -6,9 +6,12 @@ Something about dragons. And dices.
 For requirement, I advice to use virtualenv:
 
 sudo apt-get install virtualenv
+sudo apt-get install build-essential python-dev libmysqlclient-dev
 virtualenv .
 . bin/activate
 pip install pyramid
+pip install sqlalchemy
+pip install MySQL-python
 
 * comment may often be in engrish.
 * the code have not sanity-checked yet, so it may have some cosmic horror lurking in some classes
