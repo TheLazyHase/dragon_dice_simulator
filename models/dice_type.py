@@ -18,12 +18,13 @@ dice_type_table = Table('dice_type', metadata,
 )
 
 def dice_type_mapper():
-    from models import get_all, get_by_id, save
+    from models import get_all, get_by_id, save, delete
     from business.dice.dice_type import DiceType
     from sqlalchemy.orm import mapper, relationship
 
     DiceType.get_all = classmethod(get_all)
     DiceType.get_by_id = classmethod(get_by_id)
     DiceType.save = save
+    DiceType.delete = delete
 
     mapper(DiceType, dice_type_table, properties={})

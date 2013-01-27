@@ -18,7 +18,7 @@ army_table = Table('army', metadata,
 
 
 def army_mapper():
-    from models import get_all, get_by_id, save
+    from models import get_all, get_by_id, save, delete
     from business.army.army import Army
     from business.army.position import ArmyPosition
     from sqlalchemy.orm import mapper, relationship
@@ -26,6 +26,7 @@ def army_mapper():
     Army.get_all = classmethod(get_all)
     Army.get_by_id = classmethod(get_by_id)
     Army.save = save
+    Army.delete = delete
 
     mapper(Army, army_table, properties={
         'position': relationship(ArmyPosition)

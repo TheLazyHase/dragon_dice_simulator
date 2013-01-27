@@ -39,7 +39,7 @@ dice_element_table = Table('dice_element', metadata,
 )
 
 def dice_template_mapper():
-    from models import get_all, get_by_id, save
+    from models import get_all, get_by_id, save, delete
     from business.dice.dice_template import DiceTemplate
     from business.dice.dice_face_template import DiceFaceTemplate
     from business.dice.dice_element import DiceElement
@@ -52,6 +52,7 @@ def dice_template_mapper():
     DiceTemplate.get_all = classmethod(get_all)
     DiceTemplate.get_by_id = classmethod(get_by_id)
     DiceTemplate.save = save
+    DiceTemplate.delete = delete
 
     mapper(DiceTemplate, dice_template_table, properties={
         'type': relationship(DiceType), 

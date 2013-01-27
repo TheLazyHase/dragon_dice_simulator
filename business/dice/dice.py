@@ -10,7 +10,6 @@ class Dice(object):
         self.nickname = nickname
         self.template = template
         self.army = army
-        self.id = 0
         self.hydrate()
 
     @reconstructor

@@ -28,7 +28,12 @@ def save(self, explicit=False):
     if explicit:
         DBSession.flush()
     return self
-    
+
+def delete(self, explicit=False):
+    DBSession.delete(self)
+    if explicit:
+        DBSession.flush()
+    del self
 
 from models.element import element_mapper
 element_mapper()

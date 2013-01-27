@@ -7,6 +7,8 @@ from business.dice.dice import Dice
 from business.dice.dice_template import DiceTemplate
 from business.race import Race
 
+from models import DBSession
+
 import re
 
 class ArmiesController(BaseController):
@@ -25,14 +27,20 @@ class ArmiesController(BaseController):
         army = Army(army_position)
         army.name = self.request.POST['army_name']
         army.save()
-        return army_edition(army, ('Army named %s succesfully created !' % army.name)
+        return self.army_edition(army, ('Army named %s succesfully created !' % army.name))
 
     @view_config(route_name='army_edition', renderer='controller.army:templates/edition.mako')
     @view_config(route_name='army_edition_alias', renderer='controller.army:templates/edition.mako')
     def army_edition(self, army=None, special_message=''):
         if (army == None):
-            army = Army.get_by_id(self.request.matchdict.get('id'), self.request.GET['chosen_army'])
-        dice_list = [{'id': dice.id, 'name': dice.title} for dice in army.components]
+            import pprint
+            army_id = self.request.matchdict.get('id', 0)
+            if army_id == 0:
+                army_id = self.request.GET['chosen_army']
+            army = Army.get_by_id(army_id)
+        from pprint import pprint
+        
+        dice_list = [{'id': dice.id, 'name': dice.name, 'picture': dice.template.picture} for dice in army.components]
         template_list = [{'id': dice_template.id, 'name': dice_template.name, 'picture': dice_template.picture} for dice_template in DiceTemplate.get_all()]
         return {'special_message': special_message, 'templates': template_list, 'dices': dice_list, 'army_id': army.id}
 
@@ -40,15 +48,18 @@ class ArmiesController(BaseController):
     def do_army_edition(self, army=None, special_message=''):
         army = Army.get_by_id(self.request.matchdict.get('id'))
 
-        removed_dice_id_list = self.request.POST['unit_to_remove']
-        for dice_id in removed_dice_id_list:
-            del Dice.get_by_id(int(dice_id))
+        from pprint import pprint
+        pprint(self.request.POST)
+        pprint('=======================================')
+        if 'unit_to_remove[]' in self.request.POST:
+            for dice_id in self.request.POST.getall('unit_to_remove[]'):
+                Dice.get_by_id(int(dice_id)).delete()
         #Ugly, but how to do otherwise ?
-        regexp = re.compile('^unit_amount_([1-9][0-9]{1-2})$')
+        regexp = re.compile('unit_amount_([1-9][0-9]{0,2})')
         for element, amount in self.request.POST.items():
-            m = regexp.match(element)
+            m = regexp.search(element)
             if ((m != None) and (int(amount) > 0)):
-                for i in range(1,int(amount)):
+                for i in range(int(amount)):
                     dice = Dice(DiceTemplate.get_by_id(m.group(1)), army)
                     dice.save()
-        return army_edition(army, ('army %s succesfully modified !' % army.name)
+        return self.army_edition(army, ('army %s succesfully modified !' % army.name))
