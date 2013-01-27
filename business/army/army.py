@@ -66,16 +66,6 @@ class Army(object):
 
         self.effect = []
 
-    def add(self, dice):
-        self.components.append(dice)
-
-    def remove(self, dices):
-        updated_dice_list = []
-        for dice in self.component:
-            if not (dice in dices):
-                updated_dice_list.append(dice)
-        self.components = updated_dice_list
-
     @property
     def result_description(self):
         result = ''
@@ -351,22 +341,17 @@ class Army(object):
 
         return int(floor(result))
 
-    @property
-    def melee(self):
+    def get_melee_result(self):
         return self.get_result(Face.ICON_MELEE)
 
-    @property
-    def missile(self):
+    def get_missile_result(self):
         return self.get_result(Face.ICON_MISSILE)
 
-    @property
-    def maneuver(self):
+    def get_maneuver_result(self):
         return self.get_result(Face.ICON_MANEUVER)
 
-    @property
-    def magic(self):
+    def get_magic_result(self):
         return self.get_result(Face.ICON_MAGIC)
 
-    @property
-    def save(self):
+    def get_save_result(self):
         return self.get_result(Face.ICON_SAVE)

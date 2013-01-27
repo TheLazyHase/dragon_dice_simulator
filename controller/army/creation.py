@@ -17,8 +17,8 @@ class ArmiesController(BaseController):
     def army_creation(self):
         army_position = ArmyPosition.get_by_id(1)
         army = Army(army_position)
-        army.save()
         army.name = self.request.POST['army_name']
+        army.save()
         return {'name': army.name}
 
     @view_config(route_name='army_modification', renderer='controller.army:templates/creation.mako')
