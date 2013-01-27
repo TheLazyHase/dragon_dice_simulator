@@ -22,7 +22,9 @@ if __name__ == '__main__':
     #Add route here
     config.add_route('army_selection', '/army/selection')
     config.add_route('army_creation', '/army/new', request_method="POST")
-    config.add_route('army_modification', '/army/{id}')
+    config.add_route('army_edition', '/army/{id}')
+    config.add_route('army_edition_alias', '/army/edition', request_method="GET")
+    config.add_route('army_do_edition', '/army/edition/{id}', request_method="POST")
 
     #Scan for route
     config.scan('controller')

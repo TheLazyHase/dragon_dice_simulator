@@ -40,9 +40,9 @@ class Dice(object):
     @property
     def name(self):
         if self.nickname != '':
-            name = self.nickname+' ,'+(self.template.title % self.id)
+            name = self.nickname+' ,'+self.template.name
         else:
-            name = (self.template.title % self.id)
+            name = self.template.name
         return name
 
     @property

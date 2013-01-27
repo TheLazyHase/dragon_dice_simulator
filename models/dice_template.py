@@ -46,7 +46,7 @@ def dice_template_mapper():
     from business.dice.dice_type import DiceType
     from business.element import Element
     from business.race import Race
-    from sqlalchemy.orm import mapper, relationship
+    from sqlalchemy.orm import mapper, relationship, backref
     from sqlalchemy.ext.associationproxy import association_proxy
 
     DiceTemplate.get_all = classmethod(get_all)
@@ -59,7 +59,7 @@ def dice_template_mapper():
     })
 
     mapper(DiceFaceTemplate, dice_face_template_table, properties={
-        'dice': relationship(DiceTemplate, backref='faces'), 
+        'dice': relationship(DiceTemplate, backref=backref('faces', order_by=dice_face_template_table.c.side_number)), 
     })
 
     mapper(DiceElement, dice_element_table, properties={

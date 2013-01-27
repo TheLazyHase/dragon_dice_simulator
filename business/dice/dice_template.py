@@ -26,12 +26,14 @@ class DiceTemplate(object):
 
     @property
     def title(self):
-        title = ("%s %s (#" % (self.race.name, self.name))+"%s"+(", %s" % self.type.name)
+        title = ("%s %s, %s" % (self.race.name, self.name, self.type.name))
         if (len(self.elements) > 0):
-            title += ", %s)" % '/'.join([element.name for element in self.elements])
-        else:
-            title += ")"
+            title += "(%s)" % '/'.join([element.name for element in self.elements])
         return title
+
+    @property
+    def picture(self):
+        return self.faces[0].picture
 
     @property
     def face_description(self):
