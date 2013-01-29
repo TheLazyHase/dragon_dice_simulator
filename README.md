@@ -32,3 +32,5 @@ Next in line :
 * add pyramid as web framework, because it will be significantly easier to both code and use than command-line commands
 * use sqlalchemy + some db (postgresql, mysql ?) to persist information
 * make a virtualenv to make dependancy works without hurdles
+
+Contact: frederick.ohlmann@gmail.com
