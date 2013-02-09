@@ -40,9 +40,10 @@ if __name__ == '__main__':
     #Add route here
     config.add_route('army_selection', '/army/selection')
     config.add_route('army_creation', '/army/new', request_method="POST")
-    config.add_route('army_edition', '/army/{id:[[0-9]/]+}', request_method="GET")
+    config.add_route('army_edition', '/army/{id:[0-9]+}', request_method="GET")
     config.add_route('army_edition_alias', '/army/edition', request_method="GET")
     config.add_route('do_army_edition', '/army/edition/{id}', request_method="POST")
+    config.add_route('unit_view', '/unit/{id:[0-9]+}', request_method="GET")
 
     #Scan for route
     config.scan('controller')

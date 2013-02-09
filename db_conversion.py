@@ -44,17 +44,96 @@ conversion_icon = {
     'SAVE': 'Save',
     'ID': 'ID',
     'GROUPID': 'GroupID',
-    'FLY': 'Fly',
+
+    'ATTUNE': 'Attune',
+
+    'BASH': 'Bash',
+    'BELLY': 'Belly',
+    'BREATH': 'Breath',
     'BULLSEYE': 'Bullseye',
+
     'CANTRIP': 'Cantrip',
+    'CHARGE': 'Charge',
+    'CHARM': 'Charm',
+    'CHOKE': 'Choke',
+    'COIL': 'Coil',
+    'COUNTER': 'Counter',
+    'CONFUSE': 'Confuse',
+    'CONVERT': 'Convert',
+    'CREATE_FIREMINIONS': 'CreateFireminions',
+    'CRUSH': 'Crush',
+
+    'DECAPITATE': 'Decapitate',
+    'DISPEL_MAGIC': 'DispelMagic',
     'DOUBLE_STRIKE': 'DoubleStrike',
+
+    'ELEVATE': 'Elevate',
+    'ENTANGLE': 'Entangle',
+
+    'FERRY': 'Ferry',
+    'FIRECLOUD': 'Firecloud',
+    'FIREWALKING': 'Firewalking',
+    'FLAME': 'Flame',
+    'FLAMING_ARROW': 'FlamingArrow',
+    'FLURRY': 'Flurry',
+    'FLY': 'Fly',
     'FROST_BREATH': 'FrostBreath',
+
+    'GALEFORCE': 'Galeforce',
+    'GORE': 'Gore',
+
     'HOWL': 'Howl',
+    'HUG': 'Hug',
+
+    'ILLUSION': 'Illusion',
+    'IMPALE': 'Impale',
+
+    'KICK': 'Kick',
+
+    'LOGO': 'Logo',
+
+    'NET': 'Net',
+
+    'PLAGUE': 'Plague',
+    'POISON': 'Poison',
+
+    'REGENERATE': 'Regenerate',
     'REND': 'Rend',
+    'RISE_FROM_THE_ASHES': 'RiseFromAshes',
+    'ROAR': 'Roar',
+
+    'SCARE': 'Scare',
+    'SCREECH': 'Screech',
+    'SEIZE': 'Seize',
+    'SLAY': 'Slay',
+    'SLEEP': 'Sleep',
     'SMITE': 'Smite',
-    'SWALLOW': 'Swallow',
+    'SMOTHER': 'Smother',
+    'SNEAKATTACK': 'SneakAttack',
+    'SORTIE': 'Sortie',
+    'STOMP': 'Stomp',
+    'STONE': 'Stone',
+    'STUN': 'Stun',
+    'SUMMON_DRAGON': 'SummonDragon',
     'SURPRISE': 'Surprise',
+    'SWALLOW': 'Swallow',
+
+    'TAIL': 'Tail',
+    'TELEPORT': 'Teleport',
+    'TRAMPLE': 'Trample',
+    'TRUMPET': 'Trumpet',
+
+    'VANISH': 'Vanish',
     'VOLLEY': 'Volley',
+
+    'WAVE': 'Wave',
+    'WAYFARE': 'Wayfare',
+    'WEB': 'Web',
+    'WILD_GROWTH': 'WildGrowth',
+    'WITHER': 'Wither',
+
+    #For non released stuff
+    'NONE': 'Melee',
 }
 
 from business.element import Element
@@ -65,7 +144,7 @@ conversion_color = {
     'FIRE': Element.get_by_id(2),
     'DEATH': Element.get_by_id(5),
     'IVORY': Element.get_by_id(6),
-    'WHITE': Element.get_by_id(7),
+    'WHITE': Element.get_by_id(7)
 }
 
 from business.dice.dice_type import DiceType
@@ -91,28 +170,26 @@ conversion_race = {
     'FROSTWING': Race.get_by_id(10),
     'TREEFOLK': Race.get_by_id(12),
     #All color of eldarim are eldarim
-    'ELDARIM_WATER': Race.get_by_id(13),
-    'ELDARIM_AIR': Race.get_by_id(13),
-    'ELDARIM_FIRE': Race.get_by_id(13),
-    'ELDARIM_EARTH': Race.get_by_id(13),
-    'ELDARIM_DEATH': Race.get_by_id(13),
-    'ELDARIM_WHITE': Race.get_by_id(13),
+    'ELDARIM_WATER': Race.get_by_id(14),
+    'ELDARIM_AIR': Race.get_by_id(14),
+    'ELDARIM_FIRE': Race.get_by_id(14),
+    'ELDARIM_EARTH': Race.get_by_id(14),
+    'ELDARIM_DEATH': Race.get_by_id(14),
+    'ELDARIM_WHITE': Race.get_by_id(14),
     #All color of dragonkin are dragonkin
-    'RED': Race.get_by_id(14),
-    'GOLD': Race.get_by_id(14),
-    'GREEN': Race.get_by_id(14),
-    'BLACK': Race.get_by_id(14),
-    'BLUE': Race.get_by_id(14),
+    'RED': Race.get_by_id(13),
+    'GOLD': Race.get_by_id(13),
+    'GREEN': Race.get_by_id(13),
+    'BLACK': Race.get_by_id(13),
+    'BLUE': Race.get_by_id(13),
     #Make the color in the sky
 }
 
 import MySQLdb as mdb
 connection = mdb.connect(settings.db_host, settings.db_user, settings.db_password, 'dragon_dice_origin')
 
-
-
 cursor = connection.cursor(mdb.cursors.DictCursor)
-cursor.execute("SELECT a.*, b.Element_ID_1, b.Element_ID_2, c.Health from Dice as a LEFT JOIN Dice_Races as b ON a.Race_ID = b.Race_ID LEFT JOIN Dice_Rarities as c ON a.Rarity_ID = c.Rarity_ID WHERE a.race_ID = 'FROSTWING' AND a.MajorType_ID = 'UNIT' ORDER BY c.health ASC, a.MinorType_ID ASC, a.name ASC")
+cursor.execute("SELECT a.*, b.Element_ID_1, b.Element_ID_2, c.Health from Dice as a LEFT JOIN Dice_Races as b ON a.Race_ID = b.Race_ID LEFT JOIN Dice_Rarities as c ON a.Rarity_ID = c.Rarity_ID WHERE  a.MajorType_ID = 'UNIT' ORDER BY b.id ASC, c.health ASC, a.MinorType_ID ASC, a.name ASC")
 dice_result = cursor.fetchall()
 for dice_info in dice_result:
     dice = DiceTemplate(dice_info['Name'], dice_info['Description'], conversion_type[dice_info['Health']], conversion_race[dice_info['Race_ID']])
@@ -120,10 +197,10 @@ for dice_info in dice_result:
     DBSession.add(dice)
 
     #Add color
-    if (dice_info['Element_ID_1'] != 'None'):
+    if (dice_info['Element_ID_1'] != 'NONE'):
         color1 = DiceElement(dice, conversion_color[dice_info['Element_ID_1']])
         DBSession.add(color1)
-    if (dice_info['Element_ID_2'] != 'None'):
+    if (dice_info['Element_ID_2'] != 'NONE'):
         color2 = DiceElement(dice, conversion_color[dice_info['Element_ID_2']])
         DBSession.add(color2)
 

@@ -16,7 +16,7 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import SAI, Missile, Save
+from business.dice.face import Face, SAI, Missile, Save
 from business.effect import UnsaveableDamageEffect
 
 class Volley(SAI, Missile, Save):
@@ -40,3 +40,11 @@ class Volley(SAI, Missile, Save):
         if (self.type_roll.is_save):
             value = UnsaveableDamageEffect(self.amount)
         return value
+
+    icon = {
+        Face.ICON_MELEE: 0,
+        Face.ICON_MISSILE: 1,
+        Face.ICON_MANEUVER: 0,
+        Face.ICON_MAGIC: 0,
+        Face.ICON_SAVE: 1,
+    }

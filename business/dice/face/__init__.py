@@ -37,7 +37,7 @@ class Face(object):
         ICON_SAVE: 'Save',
     }
 
-    #nb. of icon on the empty face
+    #type of icon
     icon = {
         ICON_MELEE: 0,
         ICON_MISSILE: 0,
@@ -57,24 +57,35 @@ class Face(object):
     def name(self):
         return 'nothing'
 
+    def icons(self, icon_type):
+        if (self.type_roll.is_test):
+            return_value = self.test_value(icon_type)
+        else:
+            return_value = self.icon_by_type(icon_type)
+        return return_value
+
+    #This function is here to be overwritten to give meaningful value for statistic test rolls
+    def test_value(self, icon_type):
+        return self.icon_by_type(icon_type)
+
     def icon_by_type(self, icon_type):
         return self.amount * self.icon[icon_type]
 
     @property
     def melee(self):
-        return self.icon_by_type(Face.ICON_MELEE)
+        return self.icons(Face.ICON_MELEE)
 
     @property
     def missile(self):
-        return self.icon_by_type(Face.ICON_MISSILE)
+        return self.icons(Face.ICON_MISSILE)
 
     @property
     def maneuver(self):
-        return self.icon_by_type(Face.ICON_MANEUVER)
+        return self.icons(Face.ICON_MANEUVER)
 
     @property
     def magic(self):
-        return self.icon_by_type(Face.ICON_MAGIC)
+        return self.icons(Face.ICON_MAGIC)
 
     @property
     def save(self):
@@ -121,6 +132,7 @@ from business.dice.face.choke import Choke
 from business.dice.face.coil import Coil
 from business.dice.face.confuse import Confuse
 from business.dice.face.convert import Convert
+from business.dice.face.counter import Counter
 from business.dice.face.create_fireminions import CreateFireminions
 from business.dice.face.crush import Crush
 

@@ -23,3 +23,6 @@ class SAI(object):
     @property   
     def type(self):
         return Face.TYPE_SAI
+
+    def test_value(self, icon_type):
+        return self.amount * self.icon[icon_type]

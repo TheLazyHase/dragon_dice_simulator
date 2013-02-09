@@ -16,41 +16,35 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Face
-from business.effect import VersatileIconEffect
+from business.dice.face import Face, SAI, Melee, Save
+from business.effect import UnsaveableDamageEffect
 
-class ID(Face):
-    @property   
-    def type(self):
-        return Face.TYPE_ID
-
+class Counter(SAI, Melee, Save):
     @property
     def name(self):
-        return '%s ID' % self.amount
+        return '%s Counter' % self.amount
 
     def icon_by_type(self, icon_type):
         value = 0
-        #If the roll is combined, then do not count the ID yet, but create a effect to signale the choice to the player
-        #Else, consider the ID as being the thing needed for the roll
-        #(and nothing else, which help for racial substitution calculs)
-        if ((not self.type_roll.is_combined) and (self.type_roll.main_icon == icon_type)):
-            value = self.amount
+        if (icon_type == Face.ICON_MELEE):
+            if (self.type_roll.is_missile or self.type_roll.is_dragon):
+                value = self.amount
+        elif (icon_type == Face.ICON_SAVE):
+            if (self.type_roll.is_save or self.type_roll.is_dragon):
+                value = self.amount
         return value
-
-    icon = {
-        Face.ICON_MELEE: 1,
-        Face.ICON_MISSILE: 1,
-        Face.ICON_MANEUVER: 1,
-        Face.ICON_MAGIC: 1,
-        Face.ICON_SAVE: 1,
-    }
-
-    def test_value(self, icon_type):
-        return self.amount * self.icon[icon_type]
 
     @property
     def special_effect(self):
         value = None
-        if (self.type_roll.is_combined):
-            value = VersatileIconEffect(self.amount, option=self.type_roll.allowed_icon)
+        if (self.type_roll.is_save):
+            value = UnsaveableDamageEffect(self.amount)
         return value
+
+    icon = {
+        Face.ICON_MELEE: 1,
+        Face.ICON_MISSILE: 0,
+        Face.ICON_MANEUVER: 0,
+        Face.ICON_MAGIC: 0,
+        Face.ICON_SAVE: 1,
+    }

@@ -80,6 +80,10 @@ from business.army.roll.maneuver import ManeuverRoll
 from business.army.roll.counter_maneuver import CounterManeuverRoll
 from business.army.roll.magic import MagicRoll
 
+#Test roll
+from business.army.roll.test import TestRoll
+
+
 #Avoidance roll
 from business.army.roll.melee_avoidance import MeleeAvoidanceRoll
 from business.army.roll.maneuver_avoidance import ManeuverAvoidanceRoll

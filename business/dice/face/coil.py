@@ -16,8 +16,7 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face.melee import Melee
-from business.dice.face.sai import SAI
+from business.dice.face import Face, Melee, SAI
 
 class Coil(SAI, Melee):
     @property
@@ -40,3 +39,11 @@ class Coil(SAI, Melee):
     @property
     def special_effect(self):
         print 'NYI'
+
+    icon = {
+        Face.ICON_MELEE: 1,
+        Face.ICON_MISSILE: 0,
+        Face.ICON_MANEUVER: 0,
+        Face.ICON_MAGIC: 0,
+        Face.ICON_SAVE: 0,
+    }

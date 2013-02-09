@@ -16,7 +16,7 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Melee, SAI
+from business.dice.face import Face, Melee, SAI
 
 class MeleeSpecialEffect(SAI, Melee):
 

@@ -29,7 +29,7 @@ from models import metadata, DBSession
 
 dice_template_table = Table('dice_template', metadata,
     Column('id', Integer, primary_key=True),
-    Column('name', String(25)),
+    Column('name', String(30)),
     Column('race_id', Integer, ForeignKey('race.id')),
     Column('type_id', Integer, ForeignKey('dice_type.id')),
     Column('description', String(200)),
@@ -73,7 +73,7 @@ def dice_template_mapper():
 
     mapper(DiceTemplate, dice_template_table, properties={
         'type': relationship(DiceType), 
-        'race': relationship(Race), 
+        'race': relationship(Race, backref='dices'), 
     })
 
     mapper(DiceFaceTemplate, dice_face_template_table, properties={
