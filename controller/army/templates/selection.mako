@@ -13,7 +13,7 @@
             <option value=${id}>${name}</option>
             % endfor
         </select>
-        <input type="submit" name="Ok" />
+        <input type="submit" value="Ok" />
     </form>
 </div>
 %endif
@@ -22,6 +22,6 @@
     <form method="POST" action="/army/new">
         <p>Or type a name for your new army:</p>
         <input type="text" name="army_name" />
-        <input type="submit" name="Ok" />
+        <input type="submit" value="Ok" />
     </form>
 </div

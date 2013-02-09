@@ -50,13 +50,14 @@ class ArmiesController(BaseController):
     @view_config(route_name='army_edition', renderer='controller.army:templates/edition.mako')
     @view_config(route_name='army_edition_alias', renderer='controller.army:templates/edition.mako')
     def army_edition(self, army=None, special_message=''):
+        from pprint import pprint
         if (army == None):
-            import pprint
             army_id = self.request.matchdict.get('id', 0)
             if army_id == 0:
                 army_id = self.request.GET['chosen_army']
+            pprint(army_id)
             army = Army.get_by_id(army_id)
-        from pprint import pprint
+            pprint(army)
         
         dice_list = [{'id': dice.id, 'name': dice.name, 'picture': dice.template.picture} for dice in army.components]
         template_list = [{'id': dice_template.id, 'name': dice_template.name, 'picture': dice_template.picture} for dice_template in DiceTemplate.get_all()]
