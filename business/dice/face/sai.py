@@ -19,6 +19,8 @@
 #Because of how multiple inheritance work, I can't make this class descent from face :(
 #(tricky topic)
 
+from business.dice.face import Face
+
 class SAI(object):
     @property   
     def type(self):

@@ -192,23 +192,24 @@ cursor = connection.cursor(mdb.cursors.DictCursor)
 cursor.execute("SELECT a.*, b.Element_ID_1, b.Element_ID_2, c.Health from Dice as a LEFT JOIN Dice_Races as b ON a.Race_ID = b.Race_ID LEFT JOIN Dice_Rarities as c ON a.Rarity_ID = c.Rarity_ID WHERE  a.MajorType_ID = 'UNIT' ORDER BY b.id ASC, c.health ASC, a.MinorType_ID ASC, a.name ASC")
 dice_result = cursor.fetchall()
 for dice_info in dice_result:
-    dice = DiceTemplate(dice_info['Name'], dice_info['Description'], conversion_type[dice_info['Health']], conversion_race[dice_info['Race_ID']])
+    if conversion_race[dice_info['Race_ID']].id < 13:
+        dice = DiceTemplate(dice_info['Name'], dice_info['Description'], conversion_type[dice_info['Health']], conversion_race[dice_info['Race_ID']])
 
-    DBSession.add(dice)
+        DBSession.add(dice)
 
-    #Add color
-    if (dice_info['Element_ID_1'] != 'NONE'):
-        color1 = DiceElement(dice, conversion_color[dice_info['Element_ID_1']])
-        DBSession.add(color1)
-    if (dice_info['Element_ID_2'] != 'NONE'):
-        color2 = DiceElement(dice, conversion_color[dice_info['Element_ID_2']])
-        DBSession.add(color2)
+        #Add color
+        if (dice_info['Element_ID_1'] != 'NONE'):
+            color1 = DiceElement(dice, conversion_color[dice_info['Element_ID_1']])
+            DBSession.add(color1)
+        if (dice_info['Element_ID_2'] != 'NONE'):
+            color2 = DiceElement(dice, conversion_color[dice_info['Element_ID_2']])
+            DBSession.add(color2)
 
-    cursor.execute("SELECT * from Dice_Sides as a LEFT JOIN Dice_Faces as b ON a.Face_ID = b.Face_ID WHERE a.Die_ID = '"+dice_info['Die_ID']+"'")
-    face_result = cursor.fetchall()
-    faces = []
-    for face_info in face_result:
-        face = DiceFaceTemplate(dice, face_info['SideNumber'], conversion_icon[face_info['Icon_ID']], face_info['Quantity'], face_info['Image'])
-        faces.append(face)
-        DBSession.add(face)
-    DBSession.flush()
+        cursor.execute("SELECT * from Dice_Sides as a LEFT JOIN Dice_Faces as b ON a.Face_ID = b.Face_ID WHERE a.Die_ID = '"+dice_info['Die_ID']+"'")
+        face_result = cursor.fetchall()
+        faces = []
+        for face_info in face_result:
+            face = DiceFaceTemplate(dice, face_info['SideNumber'], conversion_icon[face_info['Icon_ID']], face_info['Quantity'], face_info['Image'])
+            faces.append(face)
+            DBSession.add(face)
+        DBSession.flush()

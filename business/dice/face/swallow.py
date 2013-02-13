@@ -33,3 +33,4 @@ class Swallow(SAI, Melee):
         if (self.type_roll.is_melee and (not self.type_roll.is_avoidance)):
             value = TargetedKillEffect(1)
         return value
+

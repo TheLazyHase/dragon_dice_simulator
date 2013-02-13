@@ -20,11 +20,17 @@ from business.dice.face import Face
 from math import floor
 from business.effect import RacialMalusChoiceEffect
 
+from sqlalchemy.orm import reconstructor
+
 class Army(object):
     def __init__(self, position=None):
         self.components = []
         self.position = position
 
+        self.hydrate()
+
+    @reconstructor
+    def hydrate(self):
         #Modifiers
         self.malus = {
             Face.ICON_MELEE: 0,
@@ -86,9 +92,9 @@ class Army(object):
 
     @property
     def result_description(self):
-        result = ''
+        result = []
         for dice in self.components:
-            result = result + dice.result_description + "\r\n"
+            result.append(dice.result_description)
         return result
 
     def add_bonus(self, icon_type, value=1):
@@ -214,9 +220,9 @@ class Army(object):
 
     @property
     def effect_description(self):
-        result = ''
+        result = []
         for effect in self.effect:
-            result +=  "\r\n" + ('* %s' % effect.name)
+            result.append('* %s' % effect.name)
 
         return result
 
@@ -345,7 +351,7 @@ class Army(object):
         #dice-wide additive bonus (dragonkin autosave)
         for dice in self.components:
             result += dice.autoresult[icon_type]
-            result[dice.race.tag] += dice.autoresult[icon_type]
+            result_by_race[dice.race.tag] += dice.autoresult[icon_type]
         #Army-wide additive bonus
         #If we want race-based result, we switch the total with the racial total
         if (desired_race == None):

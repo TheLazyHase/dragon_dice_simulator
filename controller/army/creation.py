@@ -20,6 +20,7 @@ from pyramid.view import view_config
 from controller import BaseController
 
 from business.army.army import Army
+from business.army.roll import *
 from business.army.position import ArmyPosition
 from business.dice.dice import Dice
 from business.dice.dice_template import DiceTemplate
@@ -50,26 +51,21 @@ class ArmiesController(BaseController):
     @view_config(route_name='army_edition', renderer='controller.army:templates/edition.mako')
     @view_config(route_name='army_edition_alias', renderer='controller.army:templates/edition.mako')
     def army_edition(self, army=None, special_message=''):
-        from pprint import pprint
         if (army == None):
             army_id = self.request.matchdict.get('id', 0)
             if army_id == 0:
                 army_id = self.request.GET['chosen_army']
-            pprint(army_id)
             army = Army.get_by_id(army_id)
-            pprint(army)
         
         dice_list = [{'id': dice.id, 'name': dice.name, 'picture': dice.template.picture} for dice in army.components]
-        template_list = [{'id': dice_template.id, 'name': dice_template.name, 'picture': dice_template.picture} for dice_template in DiceTemplate.get_all()]
-        return {'special_message': special_message, 'templates': template_list, 'dices': dice_list, 'army_id': army.id}
+        template_list = [(race.name, race.tag, [{'id': dice_template.id, 'name': dice_template.name, 'picture': dice_template.picture} for dice_template in race.dices]) for race in Race.get_all()]
+
+        return {'special_message': special_message, 'races': template_list, 'dices': dice_list, 'army_id': army.id}
 
     @view_config(route_name='do_army_edition', renderer='controller.army:templates/edition.mako')
     def do_army_edition(self, army=None, special_message=''):
         army = Army.get_by_id(self.request.matchdict.get('id'))
 
-        from pprint import pprint
-        pprint(self.request.POST)
-        pprint('=======================================')
         if 'unit_to_remove[]' in self.request.POST:
             for dice_id in self.request.POST.getall('unit_to_remove[]'):
                 Dice.get_by_id(int(dice_id)).delete()
@@ -81,4 +77,6 @@ class ArmiesController(BaseController):
                 for i in range(int(amount)):
                     dice = Dice(DiceTemplate.get_by_id(m.group(1)), army)
                     dice.save()
+
         return self.army_edition(army, ('army %s succesfully modified !' % army.name))
+

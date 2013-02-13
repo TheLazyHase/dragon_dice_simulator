@@ -89,7 +89,7 @@ class Face(object):
 
     @property
     def save(self):
-        return self.icon_by_type(Face.ICON_SAVE)
+        return self.icons(Face.ICON_SAVE)
 
     @property
     def special_effect(self):

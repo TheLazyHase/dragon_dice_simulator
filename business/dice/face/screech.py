@@ -16,10 +16,10 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Melee, SAI
+from business.dice.face import Face, SAI
 from business.effect import InflictSaveMalusEffect
 
-class Screech(SAI, Melee):
+class Screech(SAI, Face):
     @property
     def name(self):
         return '%s screech' % self.amount
