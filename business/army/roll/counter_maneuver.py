@@ -21,8 +21,12 @@ from business.dice.face import Face
 
 class CounterManeuverRoll(Roll):
     @property   
-    def is_maneuver(self):
+    def is_active_maneuver(self):
         return True
+
+    @property   
+    def is_active_player(self):
+        return False
 
     @property   
     def is_counter(self):

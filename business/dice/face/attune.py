@@ -17,6 +17,7 @@
 
 from business.dice.face.magic import Magic
 from business.dice.face.sai import SAI
+from business.effect import AttuneEffect
 
 class Attune(SAI, Magic):
     @property
@@ -25,4 +26,7 @@ class Attune(SAI, Magic):
 
     @property
     def special_effect(self):
-        print 'NYI'
+        value = None
+        if self.type_roll.is_active_magic:
+            value = AttuneEffect(1)
+        return value

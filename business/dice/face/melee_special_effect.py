@@ -23,19 +23,15 @@ class MeleeSpecialEffect(SAI, Melee):
     def icon_by_type(self, icon_type):
         value = 0
         if (icon_type == Face.ICON_MELEE):
-            if (self.type_roll.is_dragon):
+            if self.type_roll.is_active_melee:
+                value = 0 #But the special effect will be put on the stack
+            elif self.type_roll.is_avoidance_melee:
                 value = self.amount
-            elif (self.type_roll.is_melee):
-                if (self.type_roll.is_avoidance):
-                    #On avoidance, regular melee icon are generated
-                    value = self.amount
-                else:
-                    value = 0 #But the special effect will be put on the stack
         return value
 
     @property
     def special_effect(self):
         value = None
-        if (self.type_roll.is_melee and self.type_roll.is_action):
+        if (self.type_roll.is_active_melee):
             value = self.get_special()
         return value

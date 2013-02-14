@@ -21,7 +21,7 @@ from business.dice.face import Face
 
 class ManeuverRoll(Roll):
     @property   
-    def is_maneuver(self):
+    def is_active_maneuver(self):
         return True
 
     @property   

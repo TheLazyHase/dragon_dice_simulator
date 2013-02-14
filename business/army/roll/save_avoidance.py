@@ -21,11 +21,7 @@ from business.dice.face import Face
 
 class SaveAvoidanceRoll(Roll):
     @property   
-    def is_save(self):
-        return True
-
-    @property   
-    def is_avoidance(self):
+    def is_avoidance_save(self):
         return True
 
     @property   

@@ -16,18 +16,19 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.army.roll import Roll
-from business.dice.face import Face
+from business.effect import Effect
 
-class MissileRoll(Roll):
-    @property   
-    def is_active_missile(self):
-        return True
+class AttuneEffect(Effect):
 
-    @property   
-    def is_active_player(self):
-        return True
+    @property
+    def name(self):
+        return 'The magic object and %s dice produce magic of any color' % self.amount
 
-    @property   
-    def main_icon(self):
-        return Face.ICON_MISSILE
+    @property
+    def key(self):
+        return 'at'
+
+    def before_resolution(self, army, opposing_armies):
+        print 'Placeholder - here the attune effect should be resolved'
+        self.expired = True
+        

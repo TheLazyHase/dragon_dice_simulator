@@ -21,11 +21,7 @@ from business.dice.face import Face
 
 class ManeuverAvoidanceRoll(Roll):
     @property   
-    def is_maneuver(self):
-        return True
-
-    @property   
-    def is_avoidance(self):
+    def is_avoidance_maneuver(self):
         return True
 
     @property   

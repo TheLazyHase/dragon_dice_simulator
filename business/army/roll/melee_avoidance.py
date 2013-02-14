@@ -21,7 +21,7 @@ from business.dice.face import Face
 
 class MeleeAvoidanceRoll(Roll):
     @property   
-    def is_melee(self):
+    def is_avoidance_melee(self):
         return True
 
     @property   

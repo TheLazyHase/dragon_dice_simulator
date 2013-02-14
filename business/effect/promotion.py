@@ -16,18 +16,30 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.army.roll import Roll
-from business.dice.face import Face
+from business.effect import Effect
 
-class MissileRoll(Roll):
-    @property   
-    def is_active_missile(self):
-        return True
+class PromotionSaveEffect(Effect):
+    @property
+    def name(self):
+        return '%s icon to chose between save or promoting one unit' % self.amount
 
-    @property   
-    def is_active_player(self):
-        return True
+    def before_resolution(self, army, opposing_armies):
+        print 'Placeholder - here human have to choose between icon type'
+        self.expired = True
 
-    @property   
-    def main_icon(self):
-        return Face.ICON_MISSILE
+    @property
+    def key(self):
+        return 'pro'
+
+class PromotionEffect(Effect):
+    @property
+    def name(self):
+        return 'Promote %s units' % self.amount
+
+    def before_resolution(self, army, opposing_armies):
+        print 'Placeholder - here human promote unit'
+        self.expired = True
+
+    @property
+    def key(self):
+        return 'pro'

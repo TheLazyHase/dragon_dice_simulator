@@ -30,6 +30,6 @@ class Howl(SAI, Face):
     @property
     def special_effect(self):
         value = None
-        if (self.type_roll.is_melee or self.type_roll.is_missile):
+        if (self.type_roll.is_active_melee or self.type_roll.is_active_missile):
             value = InflictSaveMalusEffect(self.amount)
         return value

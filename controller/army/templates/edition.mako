@@ -4,16 +4,15 @@
 div.block{
     border: 1px solid black;
     display: inline-block;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin: 2px;
+    padding: 3px;
     width: 220px;
+    border-radius: 5px;
+    background-color: white;
 }
 div.block .name, div.block .picture, div.block .input{
   display: inline-block;
   vertical-align: middle;
-}
-div.block{
-  width: 220px;
 }
 div.block .name{
   height: 50px;
@@ -33,15 +32,15 @@ div.block .input, div.block .picture{
     }
 </script>
 
-<div>
-    <form method="POST" action="/army/edition/${army_id}">
-        <div style="border: 1px solid; width: 70%; margin-left: 15%; margin-right: 15%;">
-            <div style="border: 1px solid; width: 225px; display: inline-block; float: left">
-                <div style="border: 1px solid black; margin: auto; text-align: center;">
+<div style="width: 70%; margin-left: 15%; margin-right: 15%;">
+    <form method="POST" action="/army/${army_id}/edition">
+        <div style="border: 1px solid; min-height: 600px; border-radius: 15px; background-color: grey;">
+            <div style="border: 1px solid; width: 230px; display: inline-block; float: left; border-radius: 10px; background-color: white; margin: 5px;">
+                <div style="border: 1px solid black; margin: auto; text-align: center; border-radius: 10px;">
                     Available units
                 </div>
                 % for race_name, race_tag, race_templates in races:
-                <div style="border: 1px solid black; margin: auto; text-align: center;" onclick="toggle_visibility('container_${race_tag}')">
+                <div style="border: 1px solid black; margin: auto; text-align: center; border-radius: 5px;" onclick="toggle_visibility('container_${race_tag}')">
                     ${race_name}
                 </div>
                     <div id="container_${race_tag}" style="display: none">
@@ -75,7 +74,25 @@ div.block .input, div.block .picture{
             <input type="submit" value="Save the change" />
         </div>
     </form>
-    <form methid="get" action="/army/${army_id}/roll/test">
+    <form method="get" action="/army/selection">
+        <input type="submit" value="Return to selection" />
+    </form>
+    <form method="get" action="/army/${army_id}/roll/dragon" style="display: inline-block;">
         <input type="submit" value="Dragon Roll" />
-    </form
+    </form>
+    <form method="get" action="/army/${army_id}/roll/melee" style="display: inline-block;">
+        <input type="submit" value="Melee Roll" />
+    </form>
+    <form method="get" action="/army/${army_id}/roll/missile" style="display: inline-block;">
+        <input type="submit" value="Missile Roll" />
+    </form>
+    <form method="get" action="/army/${army_id}/roll/maneuver" style="display: inline-block;">
+        <input type="submit" value="Maneuver Roll" />
+    </form>
+    <form method="get" action="/army/${army_id}/roll/melee_save" style="display: inline-block;">
+        <input type="submit" value="Melee Save Roll" />
+    </form>
+    <form method="get" action="/army/${army_id}/roll/missile_save" style="display: inline-block;">
+        <input type="submit" value="Missile Save Roll" />
+    </form>
 </div>

@@ -21,7 +21,11 @@ from business.dice.face import Face
 
 class MagicRoll(Roll):
     @property   
-    def is_magic(self):
+    def is_active_magic(self):
+        return True
+
+    @property   
+    def is_active_player(self):
         return True
 
     @property   

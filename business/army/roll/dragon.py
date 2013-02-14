@@ -21,15 +21,15 @@ from business.dice.face import Face
 
 class DragonRoll(Roll):
     @property   
-    def is_missile(self):
+    def is_avoidance_missile(self):
         return True
 
     @property   
-    def is_melee(self):
+    def is_avoidance_melee(self):
         return True
 
     @property   
-    def is_save(self):
+    def is_avoidance_save(self):
         return True
 
     @property   

@@ -23,31 +23,87 @@ class Roll(object):
         return False
 
     @property   
-    def is_avoidance(self):
-        return False
-
-    @property   
-    def is_melee(self):
-        return False
-
-    @property   
-    def is_missile(self):
-        return False
-
-    @property   
-    def is_maneuver(self):
-        return False
-
-    @property   
-    def is_magic(self):
-        return False
-
-    @property   
-    def is_save(self):
+    def is_active_player(self):
         return False
 
     @property   
     def is_counter(self):
+        return False
+
+    @property   
+    def is_avoidance(self):
+        return False
+
+    @property   
+    def is_active_melee(self):
+        return False
+
+    @property   
+    def is_avoidance_melee(self):
+        return False
+
+    @property
+    def is_melee(self):
+        return self.is_active_melee or self.is_avoidance_melee
+
+    @property   
+    def is_active_missile(self):
+        return False
+
+    @property   
+    def is_avoidance_missile(self):
+        return False
+
+    @property
+    def is_missile(self):
+        return self.is_active_missile or self.is_avoidance_missile
+
+    @property   
+    def is_active_maneuver(self):
+        return False
+
+    @property   
+    def is_avoidance_maneuver(self):
+        return False
+
+    @property
+    def is_maneuver(self):
+        return self.is_active_maneuver or self.is_avoidance_maneuver
+
+    @property   
+    def is_active_magic(self):
+        return False
+
+    @property   
+    def is_avoidance_magic(self):
+        return False
+
+    @property
+    def is_magic(self):
+        return self.is_active_magic or self.is_avoidance_magic
+
+    @property   
+    def is_melee_save(self):
+        return False
+
+    @property   
+    def is_missile_save(self):
+        return False
+
+    @property   
+    def is_avoidance_save(self):
+        return False
+
+    @property   
+    def is_save(self):
+        return self.is_avoidance_save or self.is_melee_save or self.is_missile_save
+
+    @property   
+    def is_dragon(self):
+        return False
+
+    @property   
+    def is_test(self):
         return False
 
     #mixed refere to roll where different icon are required and provide the same effect
@@ -68,10 +124,6 @@ class Roll(object):
     def allowed_icon(self):
         return [self.main_icon]
 
-    @property   
-    def is_dragon(self):
-        return False
-
 #Regular roll
 from business.army.roll.melee import MeleeRoll
 from business.army.roll.counter_melee import CounterMeleeRoll
@@ -87,6 +139,8 @@ from business.army.roll.test import TestRoll
 #Avoidance roll
 from business.army.roll.melee_avoidance import MeleeAvoidanceRoll
 from business.army.roll.maneuver_avoidance import ManeuverAvoidanceRoll
+from business.army.roll.save_melee import SaveMeleeRoll
+from business.army.roll.save_missile import SaveMissileRoll
 from business.army.roll.save_avoidance import SaveAvoidanceRoll
 
 #Special roll

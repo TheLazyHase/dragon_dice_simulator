@@ -40,6 +40,7 @@ class Effect(object):
     def before_resolution(self, army, opposing_armies):
         pass
 
+from business.effect.attune import AttuneEffect
 from business.effect.cantrip import CantripEffect
 from business.effect.halved_result import InflictHalvedResultEffect, HalvedResultEffect
 from business.effect.no_retaliation_effect import InflictNoRetaliationEffect, NoRetaliationEffect
@@ -50,3 +51,4 @@ from business.effect.targeted_kill import TargetedKillEffect
 from business.effect.unsaveable_damage import UnsaveableDamageEffect
 from business.effect.unpreventable_damage import UnpreventableDamageEffect
 from business.effect.versatile_icon import VersatileIconEffect
+from business.effect.promotion import PromotionEffect, PromotionSaveEffect

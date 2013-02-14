@@ -21,7 +21,11 @@ from business.dice.face import Face
 
 class MeleeRoll(Roll):
     @property   
-    def is_melee(self):
+    def is_active_melee(self):
+        return True
+
+    @property   
+    def is_active_player(self):
         return True
 
     @property   

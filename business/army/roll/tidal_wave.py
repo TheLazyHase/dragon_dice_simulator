@@ -21,19 +21,11 @@ from business.dice.face import Face
 
 class TidalWaveRoll(Roll):
     @property   
-    def is_missile(self):
+    def is_avoidance_melee(self):
         return True
 
     @property   
-    def is_melee(self):
-        return True
-
-    @property   
-    def is_save(self):
-        return True
-
-    @property   
-    def is_dragon(self):
+    def is_avoidance_save(self):
         return True
 
     @property   

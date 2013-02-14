@@ -19,15 +19,11 @@
 from business.army.roll import Roll
 from business.dice.face import Face
 
-class MissileRoll(Roll):
+class SaveMeleeRoll(Roll):
     @property   
-    def is_active_missile(self):
-        return True
-
-    @property   
-    def is_active_player(self):
+    def is_melee_save(self):
         return True
 
     @property   
     def main_icon(self):
-        return Face.ICON_MISSILE
+        return Face.ICON_SAVE
