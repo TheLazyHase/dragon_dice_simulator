@@ -17,11 +17,14 @@
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
 from business.dice.face import MeleeWithSpecial
+from business.effect import UnsaveableBrawl
 
 class Hug(MeleeWithSpecial):
     @property
     def name(self):
         return '%s Hug' % self.amount
 
+    @property
     def get_special(self):
-        print 'NYI'
+        return UnsaveableBrawl(self.amount, self)
+

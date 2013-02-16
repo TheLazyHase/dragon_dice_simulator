@@ -16,13 +16,19 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Face, SAI
+from business.dice.face import SpecialOnMissile
+from business.effect import TargetedIDKillEffect, TargetedJawDragonKillEffect
 
-class Impale(SAI, Face):
+class Impale(SpecialOnMissile):
     @property
     def name(self):
         return '%s Impale' % self.amount
 
     @property
-    def get_special(self):
-        print 'NYI'
+    def on_special(self):
+        value = None
+        if (self.type_roll.is_active_melee):
+            value = TargetedIDKillEffect(1)
+        elif (self.type_roll.is_dragon):
+            value = TargetedJawDragonKillEffect(1, self.amount)
+        return value

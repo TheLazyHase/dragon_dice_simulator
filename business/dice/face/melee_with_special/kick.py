@@ -17,6 +17,7 @@
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
 from business.dice.face import MeleeWithSpecial
+from business.effect import TargetedUnsecableDamage
 
 class Kick(MeleeWithSpecial):
     @property
@@ -24,4 +25,4 @@ class Kick(MeleeWithSpecial):
         return '%s Kick' % self.amount
 
     def get_special(self):
-        print 'NYI'
+        return TargetedUnsecableDamage(1, increment=self.amount)

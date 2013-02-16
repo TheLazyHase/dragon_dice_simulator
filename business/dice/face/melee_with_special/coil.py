@@ -16,8 +16,8 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Face, Melee, SAI
 from business.dice.face import MeleeWithSpecial
+from business.effect import SaveableBrawl
 
 class Coil(MeleeWithSpecial):
     @property
@@ -26,5 +26,5 @@ class Coil(MeleeWithSpecial):
 
     @property
     def get_special(self):
-        print 'NYI'
+        return SaveableBrawl(self.amount, self)
 
