@@ -18,11 +18,14 @@
 
 from business.dice.face import Face, SAI
 
-class Roar(SAI, Face):
-    @property
-    def name(self):
-        return '%s Roar' % self.amount
+class SpecialOnMelee(SAI, Face):
+
+    def icon_by_type(self, icon_type):
+        return 0
 
     @property
-    def get_special(self):
-        print 'NYI'
+    def on_special(self):
+        value = None
+        if (self.type_roll.is_melee and self.type_roll.is_action):
+            value = self.get_special()
+        return value

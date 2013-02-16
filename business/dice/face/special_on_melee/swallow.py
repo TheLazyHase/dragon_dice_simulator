@@ -16,21 +16,15 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Melee, SAI
+from business.dice.face import SpecialOnMelee
 from business.effect import TargetedKillEffect
 
-class Swallow(SAI, Melee):
+class Swallow(SpecialOnMelee):
     @property
     def name(self):
         return 'Swallow'
 
-    def icon_by_type(self, icon_type):
-        return 0
-
     @property
-    def special_effect(self):
-        value = None
-        if (self.type_roll.is_melee and (not self.type_roll.is_avoidance)):
-            value = TargetedKillEffect(1)
-        return value
+    def get_special(self):
+        return TargetedKillEffect(1)
 

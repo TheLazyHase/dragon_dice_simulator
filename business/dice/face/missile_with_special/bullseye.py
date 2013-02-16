@@ -16,21 +16,14 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Face, SAI
+from business.dice.face import MissileWithSpecial
+from business.effect import TargetedDamageEffect
 
-class Poison(SAI, Face):
+class Bullseye(MissileWithSpecial):
     @property
     def name(self):
-        return '%s Poison' % self.amount
+        return '%s Bullseye' % self.amount
 
     @property
     def get_special(self):
-        print 'NYI'
-
-    icon = {
-        Face.ICON_MELEE: 1,
-        Face.ICON_MISSILE: 0,
-        Face.ICON_MANEUVER: 0,
-        Face.ICON_MAGIC: 0,
-        Face.ICON_SAVE: 0,
-    }
+        return TargetedDamageEffect(self.amount)

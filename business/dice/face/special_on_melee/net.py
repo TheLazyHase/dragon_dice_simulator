@@ -16,12 +16,12 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Face, SAI
+from business.dice.face import SpecialOnMelee
 
-class Trumpet(SAI, Face):
+class Net(SpecialOnMelee):
     @property
     def name(self):
-        return '%s Trumpet' % self.amount
+        return '%s Net' % self.amount
 
     @property
     def get_special(self):

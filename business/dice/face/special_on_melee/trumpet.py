@@ -16,12 +16,12 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import MissileSpecialEffect
+from business.dice.face import SpecialOnMelee
 
-class FlamingArrow(MissileSpecialEffect):
+class Trumpet(SpecialOnMelee):
     @property
     def name(self):
-        return '%s Flaming arrows' % self.amount
+        return 'Trumpet'
 
     @property
     def get_special(self):

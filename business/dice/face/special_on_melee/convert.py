@@ -16,13 +16,13 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Face, SAI
+from business.dice.face import SpecialOnMelee
 
-class Flame(SAI, Face):
+class Convert(SpecialOnMelee):
     @property
     def name(self):
-        return '%s Flame' % self.amount
+        return '%s Convert' % self.amount
 
     @property
-    def get_special(self):
+    def special_effect(self):
         print 'NYI'

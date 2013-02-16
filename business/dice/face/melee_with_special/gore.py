@@ -16,21 +16,12 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Face, SAI
+from business.dice.face import MeleeWithSpecial
 
-class Smother(SAI, Face):
+class Gore(MeleeWithSpecial):
     @property
     def name(self):
-        return '%s Smother' % self.amount
+        return '%s Gore' % self.amount
 
-    @property
     def get_special(self):
         print 'NYI'
-
-    icon = {
-        Face.ICON_MELEE: 1,
-        Face.ICON_MISSILE: 0,
-        Face.ICON_MANEUVER: 0,
-        Face.ICON_MAGIC: 0,
-        Face.ICON_SAVE: 0,
-    }
