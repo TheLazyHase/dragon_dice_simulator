@@ -48,8 +48,8 @@ conversion_icon = {
     'ATTUNE': 'Attune',
 
     'BASH': 'Bash',
-    'BELLY': 'Belly',
-    'BREATH': 'Breath',
+    'DKIN_BELLY': 'Belly',
+    'DKIN_BREATH': 'Breath',
     'BULLSEYE': 'Bullseye',
 
     'CANTRIP': 'Cantrip',
@@ -148,12 +148,20 @@ conversion_color = {
 }
 
 from business.dice.dice_type import DiceType
-conversion_type = {
+conversion_unit_type = {
     1: DiceType.get_by_id(1),
     2: DiceType.get_by_id(2),
     3: DiceType.get_by_id(3),
     4: DiceType.get_by_id(4),
 }
+
+conversion_item_type = {
+    1: DiceType.get_by_id(5),
+    2: DiceType.get_by_id(6),
+    3: DiceType.get_by_id(7),
+    4: DiceType.get_by_id(8),
+}
+medallion_type = DiceType.get_by_id(9)
 
 from business.race import Race
 conversion_race = {
@@ -170,30 +178,78 @@ conversion_race = {
     'FROSTWING': Race.get_by_id(10),
     'TREEFOLK': Race.get_by_id(12),
     #All color of eldarim are eldarim
-    'ELDARIM_WATER': Race.get_by_id(14),
-    'ELDARIM_AIR': Race.get_by_id(14),
-    'ELDARIM_FIRE': Race.get_by_id(14),
-    'ELDARIM_EARTH': Race.get_by_id(14),
-    'ELDARIM_DEATH': Race.get_by_id(14),
-    'ELDARIM_WHITE': Race.get_by_id(14),
+    'ELDARIM_WATER': Race.get_by_id(13),
+    'ELDARIM_AIR': Race.get_by_id(13),
+    'ELDARIM_FIRE': Race.get_by_id(13),
+    'ELDARIM_EARTH': Race.get_by_id(13),
+    'ELDARIM_DEATH': Race.get_by_id(13),
+    'ELDARIM_WHITE': Race.get_by_id(13),
     #All color of dragonkin are dragonkin
-    'RED': Race.get_by_id(13),
-    'GOLD': Race.get_by_id(13),
-    'GREEN': Race.get_by_id(13),
-    'BLACK': Race.get_by_id(13),
-    'BLUE': Race.get_by_id(13),
+    'RED': Race.get_by_id(14),
+    'GOLD': Race.get_by_id(14),
+    'GREEN': Race.get_by_id(14),
+    'BLACK': Race.get_by_id(14),
+    'BLUE': Race.get_by_id(14),
     #Make the color in the sky
+}
+
+item_race = Race.get_by_id(15)
+medallion_race = Race.get_by_id(16)
+
+from business.dice.dice_role import DiceRole as Role
+conversion_minor_type = {
+    'HEAVYMELEE': Role.get_by_name('Heavy Melee'),
+    'LIGHTMELEE': Role.get_by_name('Light Melee'),
+    'MISSILE': Role.get_by_name('Archer'),
+    'CAVALRY': Role.get_by_name('Cavalry'),
+    'MAGIC': Role.get_by_name('Mage'),
+    'SKIRMISHER': Role.get_by_name('Cavalry'),
+    'HEAVYMISSILE': Role.get_by_name('Heavy Archer'),
+    'LIGHTMISSILE': Role.get_by_name('Archer'),
+    'HEAVYMAGIC': Role.get_by_name('Mage'),
+    'LIGHTMAGIC': Role.get_by_name('Mage Warrior'),
+    'MONSTER': Role.get_by_name('Monster'),
+    'MAGICITEMSAVE': Role.get_by_name('Magic Shield'),
+    'MAGICITEMMANEUVER': Role.get_by_name('Magic Shoes'),
+    'MAGICITEMMELEE': Role.get_by_name('Magic Sword'),
+    'MAGICITEMMAGIC': Role.get_by_name('Magic Jewelry'),
+    'MAGICITEMMISSILE': Role.get_by_name('Magic Arrow'),
+    'CHAMPION': Role.get_by_name('Champion'),
+    'ARTIFACTMELEE': Role.get_by_name('Artifact'),
+    'ARTIFACTMISSILE': Role.get_by_name('Artifact'),
+    'ARTIFACTSAVE': Role.get_by_name('Artifact'),
+    'ARTIFACTMAGIC': Role.get_by_name('Artifact'),
+    'ARTIFACTMANEUVER': Role.get_by_name('Artifact'),
+    'SHIELDBEARER': Role.get_by_name('Shield Bearer'),
+    'MEDALLION': Role.get_by_name('Medallion')
 }
 
 import MySQLdb as mdb
 connection = mdb.connect(settings.db_host, settings.db_user, settings.db_password, 'dragon_dice_origin')
 
 cursor = connection.cursor(mdb.cursors.DictCursor)
-cursor.execute("SELECT a.*, b.Element_ID_1, b.Element_ID_2, c.Health from Dice as a LEFT JOIN Dice_Races as b ON a.Race_ID = b.Race_ID LEFT JOIN Dice_Rarities as c ON a.Rarity_ID = c.Rarity_ID WHERE  a.MajorType_ID = 'UNIT' ORDER BY b.id ASC, c.health ASC, a.MinorType_ID ASC, a.name ASC")
+cursor.execute("SELECT a.*, b.Element_ID_1, b.Element_ID_2, c.Health from Dice as a LEFT JOIN Dice_Races as b ON a.Race_ID = b.Race_ID LEFT JOIN Dice_Rarities as c ON a.Rarity_ID = c.Rarity_ID WHERE  -(a.MajorType_ID = 'UNIT' OR a.majorType_ID = 'DRAGONKIN' OR a.MajorType_ID = 'MAGICITEM' OR a.MajorType_ID = 'ARTIFACT' OR a.MajorType_ID = 'MEDALLION') ORDER BY b.id ASC, c.health ASC, a.MinorType_ID ASC, a.name ASC")
 dice_result = cursor.fetchall()
 for dice_info in dice_result:
-    if conversion_race[dice_info['Race_ID']].id < 13:
-        dice = DiceTemplate(dice_info['Name'], dice_info['Description'], conversion_type[dice_info['Health']], conversion_race[dice_info['Race_ID']])
+    if dice_info['MinorType_ID'] != 'NONE':
+        role = conversion_minor_type[dice_info['MinorType_ID']]
+        if dice_info['MajorType_ID'] == 'UNIT' or dice_info['MajorType_ID'] == 'DRAGONKIN':
+            dice_type = conversion_unit_type[dice_info['Health']]
+            race = conversion_race[dice_info['Race_ID']]
+        elif dice_info['MajorType_ID'] == 'MAGICITEM' or dice_info['MajorType_ID'] == 'ARTIFACT':
+            dice_type = conversion_item_type[dice_info['Health']]
+            race = item_race
+        else:
+            dice_type = medallion_type
+            race = medallion_race
+
+        if race.break_by_color:
+            #We remove the first element (it's alway a color and we neither need nor want it), and we reverse again
+            name = dice_info['Name'].split(' ', 1)[1]
+        else:
+            name = dice_info['Name']
+
+        dice = DiceTemplate(name, dice_info['Description'], dice_type, race, role)
 
         DBSession.add(dice)
 

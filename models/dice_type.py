@@ -21,6 +21,7 @@ from sqlalchemy import (
     Table,
     Column,
     Integer,
+    Float,
     String,
     ForeignKey,
     )
@@ -31,7 +32,7 @@ dice_type_table = Table('dice_type', metadata,
     Column('id', Integer, primary_key=True),
     Column('name', String(25)),
     Column('health', Integer),
-    Column('cost', Integer)
+    Column('cost', Float)
 )
 
 def dice_type_mapper():

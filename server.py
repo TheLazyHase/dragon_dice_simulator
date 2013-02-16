@@ -40,11 +40,17 @@ if __name__ == '__main__':
     #Add route here
     config.add_route('army_selection', '/army/selection')
     config.add_route('army_creation', '/army/new', request_method="POST")
-    config.add_route('army_edition', '/army/edition/{id:[0-9]+}', request_method="GET")
+    config.add_route('army_edition', '/army/{id:[0-9]+}/edition', request_method="GET")
     config.add_route('army_edition_alias', '/army/edition', request_method="GET")
-    config.add_route('do_army_edition', '/army/edition/{id}', request_method="POST")
+    config.add_route('do_army_edition', '/army/{id:[0-9]+}/edition', request_method="POST")
     config.add_route('unit_view', '/unit/{id:[0-9]+}', request_method="GET")
-    config.add_route('test_roll', '/army/{id:[0-9]+}/roll/test', request_method="GET")
+
+    config.add_route('dragon_roll', '/army/{id:[0-9]+}/roll/dragon', request_method="GET")
+    config.add_route('melee_roll', '/army/{id:[0-9]+}/roll/melee', request_method="GET")
+    config.add_route('missile_roll', '/army/{id:[0-9]+}/roll/missile', request_method="GET")
+    config.add_route('maneuver_roll', '/army/{id:[0-9]+}/roll/maneuver', request_method="GET")
+    config.add_route('save_melee_roll', '/army/{id:[0-9]+}/roll/melee_save', request_method="GET")
+    config.add_route('save_missile_roll', '/army/{id:[0-9]+}/roll/missile_save', request_method="GET")
 
     #Scan for route
     config.scan('controller')

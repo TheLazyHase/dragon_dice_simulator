@@ -6,7 +6,7 @@ div.block{
     display: inline-block;
     margin: 2px;
     padding: 3px;
-    width: 220px;
+    width: 230px;
     border-radius: 5px;
     background-color: white;
 }
@@ -34,13 +34,13 @@ div.block .input, div.block .picture{
 
 <div style="width: 70%; margin-left: 15%; margin-right: 15%;">
     <form method="POST" action="/army/${army_id}/edition">
-        <div style="border: 1px solid; min-height: 600px; border-radius: 15px; background-color: grey;">
-            <div style="border: 1px solid; width: 230px; display: inline-block; float: left; border-radius: 10px; background-color: white; margin: 5px;">
-                <div style="border: 1px solid black; margin: auto; text-align: center; border-radius: 10px;">
+        <div style="border: 1px solid; min-height: 650px; border-radius: 15px; background-color: #555555;">
+            <div style="border: 1px solid; width: 240px; display: inline-block; float: left; border-radius: 10px; background-color: #999999; margin: 5px;">
+                <div style="border: 1px solid black; margin: auto; text-align: center; border-radius: 10px; background-color: #BBBBBB;">
                     Available units
                 </div>
-                % for race_name, race_tag, race_templates in races:
-                <div style="border: 1px solid black; margin: auto; text-align: center; border-radius: 5px;" onclick="toggle_visibility('container_${race_tag}')">
+                % for race_name, race_tag, race_color, race_templates in races:
+                <div style="border: 1px solid black; margin: auto; text-align: center; border-radius: 5px; background-color: #${race_color};" onclick="toggle_visibility('container_${race_tag}')">
                     ${race_name}
                 </div>
                     <div id="container_${race_tag}" style="display: none">

@@ -30,7 +30,8 @@ from models import metadata, DBSession
 element_table = Table('element', metadata,
     Column('id', Integer, primary_key=True),
     Column('name', String(25)),
-    Column('element_name', String(25))
+    Column('element_name', String(25)),
+    Column('element_short_name', String(5))
 )
 
 def element_mapper():

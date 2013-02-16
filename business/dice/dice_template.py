@@ -22,11 +22,12 @@ from business.dice import face as faceDefinition
 from business.dice.dice import Dice
 
 class DiceTemplate(object):
-    def __init__(self, name, description, dice_type, race, autosave=0, automelee=0, automissile=0, automaneuver=0, automagic=0):
+    def __init__(self, name, description, dice_type, race, role, autosave=0, automelee=0, automissile=0, automaneuver=0, automagic=0):
         self.name = name
         self.description = description
         self.type = dice_type
         self.race = race
+        self.role = role
 
         self.automelee = automelee
         self.automissile = automissile
@@ -43,10 +44,18 @@ class DiceTemplate(object):
         return faces        
 
     @property
+    def role_name(self):
+        return self.role.name
+
+    @property
+    def type_name(self):
+        return self.type.name
+
+    @property
     def title(self):
         title = ("%s %s, %s" % (self.race.name, self.name, self.type.name))
         if (len(self.elements) > 0):
-            title += "(%s)" % '/'.join([element.name for element in self.elements])
+            title += " (%s)" % '/'.join([element.name for element in self.elements])
         return title
 
     @property

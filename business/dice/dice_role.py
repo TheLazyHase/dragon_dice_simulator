@@ -16,11 +16,7 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-class Race(object):
-    def __init__(self, name, racial_class, tag, ordering, color, break_by_color=False):
+class DiceRole(object):
+    def __init__(self, name, ordering):
         self.name = name
-        self.racial_class = racial_class
-        self.tag = tag
         self.ordering = ordering
-        self.color = color
-        self.break_by_color = break_by_color

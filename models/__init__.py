@@ -37,8 +37,14 @@ metadata = MetaData()
 def get_all(cls):
     return DBSession.query(cls).order_by(cls.id).all()
 
+def get_all_by_ordering(cls):
+    return DBSession.query(cls).order_by(cls.ordering).all()
+
 def get_by_id(cls, id):
     return DBSession.query(cls).get(id)
+
+def get_by_name(cls, name):
+    return DBSession.query(cls).filter(cls.name == name).one()
 
 def save(self, explicit=False):
     DBSession.add(self)

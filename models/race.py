@@ -22,6 +22,7 @@ from sqlalchemy import (
     Column,
     Integer,
     String,
+    Boolean,
     ForeignKey,
     )
 
@@ -31,15 +32,18 @@ race_table = Table('race', metadata,
     Column('id', Integer, primary_key=True),
     Column('name', String(50)),
     Column('racial_class', String(25)),
-    Column('tag', String(5))
+    Column('tag', String(5)),
+    Column('color', String(6)),
+    Column('ordering', Integer),
+    Column('break_by_color', Boolean)
 )
 
 def race_mapper():
-    from models import get_all, get_by_id, save, delete
+    from models import get_all_by_ordering, get_by_id, save, delete
     from business.race import Race
     from sqlalchemy.orm import mapper, relationship
 
-    Race.get_all = classmethod(get_all)
+    Race.get_all = classmethod(get_all_by_ordering)
     Race.get_by_id = classmethod(get_by_id)
     Race.save = save
     Race.delete = delete

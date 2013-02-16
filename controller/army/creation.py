@@ -25,6 +25,7 @@ from business.army.position import ArmyPosition
 from business.dice.dice import Dice
 from business.dice.dice_template import DiceTemplate
 from business.race import Race
+from business.element import Element
 
 from models import DBSession
 
@@ -58,7 +59,19 @@ class ArmiesController(BaseController):
             army = Army.get_by_id(army_id)
         
         dice_list = [{'id': dice.id, 'name': dice.name, 'picture': dice.template.picture} for dice in army.components]
-        template_list = [(race.name, race.tag, [{'id': dice_template.id, 'name': dice_template.name, 'picture': dice_template.picture} for dice_template in race.dices]) for race in Race.get_all()]
+
+        template_list = []
+        for race in Race.get_all():
+            if race.break_by_color:
+                for color in Element.get_all():
+                    sub_race = []
+                    for dice in race.dices:
+                        if color in dice.elements:
+                            sub_race.append(dice)
+                    if sub_race != []:
+                        template_list.append((color.name+' '+race.name, color.element_short_name+' '+race.tag, race.color, [{'id': dice.id, 'name': dice.name, 'picture': dice.picture} for dice in sub_race]))
+            else:
+                template_list.append((race.name, race.tag, race.color, [{'id': dice_template.id, 'name': dice_template.name, 'picture': dice_template.picture} for dice_template in race.dices]))
 
         return {'special_message': special_message, 'races': template_list, 'dices': dice_list, 'army_id': army.id}
 

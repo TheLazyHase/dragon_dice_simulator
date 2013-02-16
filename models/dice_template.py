@@ -32,6 +32,7 @@ dice_template_table = Table('dice_template', metadata,
     Column('name', String(30)),
     Column('race_id', Integer, ForeignKey('race.id')),
     Column('type_id', Integer, ForeignKey('dice_type.id')),
+    Column('role_id', Integer, ForeignKey('dice_role.id')),
     Column('description', String(200)),
     Column('automelee', Integer),
     Column('automissile', Integer),
@@ -55,12 +56,19 @@ dice_element_table = Table('dice_element', metadata,
     Column('element_id', Integer, ForeignKey('element.id'))
 )
 
+dice_role_table = Table('dice_role', metadata,
+    Column('id', Integer, primary_key=True),
+    Column('name', String(25)),
+    Column('ordering', Integer)
+)
+
 def dice_template_mapper():
-    from models import get_all, get_by_id, save, delete
+    from models import get_all, get_by_id, save, delete, get_by_name, get_all_by_ordering
     from business.dice.dice_template import DiceTemplate
     from business.dice.dice_face_template import DiceFaceTemplate
     from business.dice.dice_element import DiceElement
     from business.dice.dice_type import DiceType
+    from business.dice.dice_role import DiceRole
     from business.element import Element
     from business.race import Race
     from sqlalchemy.orm import mapper, relationship, backref
@@ -73,7 +81,8 @@ def dice_template_mapper():
 
     mapper(DiceTemplate, dice_template_table, properties={
         'type': relationship(DiceType), 
-        'race': relationship(Race, backref='dices'), 
+        'race': relationship(Race, backref=backref('dices', order_by=(dice_template_table.c.role_id.asc(), dice_template_table.c.type_id.asc()))),
+        'role': relationship(DiceRole, backref='dices')
     })
 
     mapper(DiceFaceTemplate, dice_face_template_table, properties={
@@ -84,5 +93,13 @@ def dice_template_mapper():
         'dice': relationship(DiceTemplate, backref='element_links'), 
         'element': relationship(Element), 
     })
+
+    DiceRole.get_all = classmethod(get_all_by_ordering)
+    DiceRole.get_by_id = classmethod(get_by_id)
+    DiceRole.get_by_name = classmethod(get_by_name)
+    DiceRole.save = save
+    DiceRole.delete = delete
+
+    mapper(DiceRole, dice_role_table)
 
     DiceTemplate.elements = association_proxy('element_links', 'element')

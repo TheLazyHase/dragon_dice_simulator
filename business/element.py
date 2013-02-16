@@ -17,7 +17,8 @@
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
 class Element(object):
-    def __init__(self, name, element_name):
+    def __init__(self, name, element_name, element_short_name):
         self.name = name
         self.element_name = element_name
+        self.element_short_name = element_short_name
 
