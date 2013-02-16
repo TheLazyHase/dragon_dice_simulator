@@ -16,22 +16,25 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Face, Melee, SAI
+from business.dice.face import SAI, Magic, Face
+from business.effect import CantripEffect
 
-class MeleeSpecialEffect(SAI, Melee):
+class Cantrip(SAI, Magic):
 
     def icon_by_type(self, icon_type):
         value = 0
-        if (icon_type == Face.ICON_MELEE):
-            if self.type_roll.is_active_melee:
-                value = 0 #But the special effect will be put on the stack
-            elif self.type_roll.is_avoidance_melee:
+        if (icon_type == Face.ICON_MAGIC):
+            if self.type_roll.is_magic:
                 value = self.amount
         return value
 
     @property
-    def special_effect(self):
+    def name(self):
+        return '%s Cantrip' % self.amount
+
+    @property
+    def on_special(self):
         value = None
-        if (self.type_roll.is_active_melee):
-            value = self.get_special()
+        if (not self.type_roll.is_maneuver) and (not self.type_roll.is_magic):
+            value = CantripEffect(self.amount)
         return value

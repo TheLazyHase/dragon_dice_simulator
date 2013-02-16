@@ -16,8 +16,7 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face.save import Save
-from business.dice.face.sai import SAI
+from business.dice.face import SAI, Save
 
 class Belly(SAI, Save):
     @property

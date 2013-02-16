@@ -16,14 +16,16 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import SpecialOnMelee
-from business.effect import TargetedKillEffect
+from business.dice.face import SAI, Face
 
-class Slay(SpecialOnMelee):
+class Charge(SAI, Face):
     @property
     def name(self):
-        return 'Slay'
+        return 'Charge'
+
+    def icon_by_type(self, icon_type):
+        return 0
 
     @property
-    def get_special(self):
-        return TargetedKillEffect(1)
+    def special_effect(self):
+        print 'NYI'

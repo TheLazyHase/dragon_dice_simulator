@@ -265,6 +265,11 @@ for dice_info in dice_result:
         face_result = cursor.fetchall()
         faces = []
         for face_info in face_result:
+            
+            if face_info['Icon_ID'] == 'ID' and name == 'Wolf Pack':
+                face = conversion_icon[face_info['Icon_ID']]
+            else:
+                face = conversion_icon[face_info['Icon_ID']]
             face = DiceFaceTemplate(dice, face_info['SideNumber'], conversion_icon[face_info['Icon_ID']], face_info['Quantity'], face_info['Image'])
             faces.append(face)
             DBSession.add(face)

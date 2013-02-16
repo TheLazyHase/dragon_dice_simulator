@@ -113,6 +113,6 @@ class Dice(object):
     def special_effect(self):
         effect = []
         for active_face in self.active_faces:
-            if (active_face.special_effect != None):
-                effect.append(active_face.special_effect)
+            if (active_face.on_special != None):
+                effect.append(active_face.on_special)
         return effect

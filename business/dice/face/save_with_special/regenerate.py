@@ -24,5 +24,5 @@ class Regenerate(SAI, Save):
         return '%s Regenerate' % self.amount
 
     @property
-    def get_special(self):
+    def on_special(self):
         print 'NYI'

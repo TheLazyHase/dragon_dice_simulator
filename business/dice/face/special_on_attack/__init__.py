@@ -16,24 +16,3 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Face, Maneuver, SAI
-
-class ManeuverSpecialEffect(SAI, Maneuver):
-
-    def icon_by_type(self, icon_type):
-        value = 0
-        if (icon_type == Face.ICON_MANEUVER):
-            if (self.type_roll.is_maneuver):
-                if (self.type_roll.is_avoidance):
-                    #On avoidance, regular maneuver icon are generated
-                    value = self.amount
-                else:
-                    value = 0 #But the special effect will be put on the stack
-        return value
-
-    @property
-    def special_effect(self):
-        value = None
-        if (self.type_roll.is_magic and self.type_roll.is_action):
-            value = self.get_special()
-        return value

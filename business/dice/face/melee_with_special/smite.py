@@ -16,10 +16,10 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import MeleeSpecialEffect
+from business.dice.face import MeleeWithSpecial
 from business.effect import UnpreventableDamageEffect
 
-class Smite(MeleeSpecialEffect):
+class Smite(MeleeWithSpecial):
     @property
     def name(self):
         return '%s Smite' % self.amount

@@ -16,13 +16,16 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Face, SAI
+from business.dice.face import SAI, Face
 
-class Firecloud(SAI, Face):
+class Confuse(SAI, Face):
     @property
     def name(self):
-        return '%s Firecloud' % self.amount
+        return '%s Confuse' % self.amount
+
+    def icon_by_type(self, icon_type):
+        return 0
 
     @property
-    def get_special(self):
+    def special_effect(self):
         print 'NYI'

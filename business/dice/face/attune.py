@@ -15,8 +15,7 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face.magic import Magic
-from business.dice.face.sai import SAI
+from business.dice.face import SAI, Magic
 from business.effect import AttuneEffect
 
 class Attune(SAI, Magic):

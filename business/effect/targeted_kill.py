@@ -26,7 +26,21 @@ class TargetedKillEffect(Effect):
 
     @property
     def key(self):
-        return 'tk'
+        return 'targeted_kill'
+
+    def before_resolution(self, army, opposing_armies):
+        print 'Placeholder - here the targeted death effect should be resolved and saved against'
+        self.expired = True
+
+class TargetedBuryEffect(Effect):
+
+    @property
+    def name(self):
+        return '%s targeted ennemy units must roll ID or be killed and buried' % self.amount
+
+    @property
+    def key(self):
+        return 'targeted_bury'
 
     def before_resolution(self, army, opposing_armies):
         print 'Placeholder - here the targeted death effect should be resolved and saved against'

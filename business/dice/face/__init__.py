@@ -116,14 +116,14 @@ class Face(object):
         return False
 
 #Regular
-from business.dice.face.save import Save
-from business.dice.face.melee import Melee
-from business.dice.face.missile import Missile
-from business.dice.face.maneuver import Maneuver
-from business.dice.face.magic import Magic
+from business.dice.face.standard.save import Save
+from business.dice.face.standard.melee import Melee
+from business.dice.face.standard.missile import Missile
+from business.dice.face.standard.maneuver import Maneuver
+from business.dice.face.standard.magic import Magic
 
-from business.dice.face.id import ID
-from business.dice.face.group_id import GroupID
+from business.dice.face.standard.id import ID
+from business.dice.face.standard.group_id import GroupID
 
 #SAI
 #templates
@@ -131,95 +131,93 @@ from business.dice.face.sai import SAI
 from business.dice.face.melee_with_special import MeleeWithSpecial
 from business.dice.face.special_on_melee import SpecialOnMelee
 from business.dice.face.missile_with_special import MissileWithSpecial
-from business.dice.face.missile_special_effect import MissileSpecialEffect
-from business.dice.face.maneuver_special_effect import ManeuverSpecialEffect
-from business.dice.face.save_special_effect import SaveSpecialEffect
-from business.dice.face.magic_special_effect import MagicSpecialEffect
+from business.dice.face.special_on_missile import SpecialOnMissile
+from business.dice.face.special_on_non_maneuver import SpecialOnNonManeuver
 
 #True SAI
 from business.dice.face.attune import Attune
 
-from business.dice.face.bash import Bash
+from business.dice.face.save_with_special.bash import Bash
 from business.dice.face.belly import Belly
-from business.dice.face.breath import Breath
+from business.dice.face.special_on_melee.breath import Breath
 from business.dice.face.missile_with_special.bullseye import Bullseye
 
-from business.dice.face.cantrip import Cantrip
-from business.dice.face.charge import Charge
+from business.dice.face.special_on_non_maneuver.cantrip import Cantrip
+from business.dice.face.special_on_melee.charge import Charge
 from business.dice.face.special_on_melee.charm import Charm
-from business.dice.face.choke import Choke
+from business.dice.face.special_on_melee.choke import Choke
 from business.dice.face.melee_with_special.coil import Coil
-from business.dice.face.confuse import Confuse
+from business.dice.face.special_on_attack.confuse import Confuse
 from business.dice.face.special_on_melee.convert import Convert
-from business.dice.face.counter import Counter
-from business.dice.face.create_fireminions import CreateFireminions
-from business.dice.face.crush import Crush
+from business.dice.face.save_with_special.counter import Counter
+from business.dice.face.versatile_result.create_fireminions import CreateFireminions
+from business.dice.face.missile_with_special.crush import Crush
 
-from business.dice.face.decapitate import Decapitate
+from business.dice.face.melee_with_special.decapitate import Decapitate
 from business.dice.face.dispel_magic import DispelMagic
-from business.dice.face.double_strike import DoubleStrike
+from business.dice.face.melee_with_reroll.double_strike import DoubleStrike
 
 from business.dice.face.elevate import Elevate
 from business.dice.face.special_on_melee.entangle import Entangle
 
-from business.dice.face.ferry import Ferry
-from business.dice.face.firecloud import Firecloud
-from business.dice.face.firewalking import Firewalking
+from business.dice.face.special_on_non_maneuver.ferry import Ferry
+from business.dice.face.special_on_missile.firecloud import Firecloud
+from business.dice.face.special_on_non_maneuver.firewalking import Firewalking
 from business.dice.face.special_on_melee.flame import Flame
 from business.dice.face.missile_with_special.flaming_arrow import FlamingArrow
-from business.dice.face.flurry import Flurry
-from business.dice.face.fly import Fly
-from business.dice.face.frost_breath import FrostBreath
+from business.dice.face.melee_with_reroll.flurry import Flurry
+from business.dice.face.versatile_result.fly import Fly
+from business.dice.face.special_on_attack.frost_breath import FrostBreath
 
-from business.dice.face.galeforce import Galeforce
+from business.dice.face.special_on_action.galeforce import Galeforce
 from business.dice.face.melee_with_special.gore import Gore
 
-from business.dice.face.howl import Howl
+from business.dice.face.special_on_attack.howl import Howl
 from business.dice.face.melee_with_special.hug import Hug
 
-from business.dice.face.illusion import Illusion
-from business.dice.face.impale import Impale
+from business.dice.face.special_on_action.illusion import Illusion
+from business.dice.face.missile_with_special.impale import Impale
 
-from business.dice.face.kick import Kick
+from business.dice.face.melee_with_special.kick import Kick
 
 from business.dice.face.logo import Logo
 
-from business.dice.face.special_on_melee.net import Net
+from business.dice.face.special_on_attack.net import Net
 
 from business.dice.face.special_on_melee.plague import Plague
 from business.dice.face.special_on_melee.poison import Poison
 
-from business.dice.face.regenerate import Regenerate
-from business.dice.face.rend import Rend
-from business.dice.face.rise_from_ashes import RiseFromAshes
+from business.dice.face.save_with_special.regenerate import Regenerate
+from business.dice.face.melee_with_reroll.rend import Rend
+from business.dice.face.save_with_special.rise_from_ashes import RiseFromAshes
 from business.dice.face.special_on_melee.roar import Roar
 
-from business.dice.face.scare import Scare
-from business.dice.face.screech import Screech
-from business.dice.face.seize import Seize
+from business.dice.face.special_on_melee.scare import Scare
+from business.dice.face.special_on_melee.screech import Screech
+from business.dice.face.special_on_missile.seize import Seize
 from business.dice.face.special_on_melee.slay import Slay
-from business.dice.face.sleep import Sleep
+from business.dice.face.special_on_melee.sleep import Sleep
 from business.dice.face.melee_with_special.smite import Smite
 from business.dice.face.special_on_melee.smother import Smother
 from business.dice.face.sneak_attack import SneakAttack
-from business.dice.face.sortie import Sortie
+from business.dice.face.save_with_special.sortie import Sortie
 from business.dice.face.melee_with_special.stomp import Stomp
 from business.dice.face.missile_with_special.stone import Stone
 from business.dice.face.special_on_melee.stun import Stun
 from business.dice.face.summon_dragon import SummonDragon
-from business.dice.face.surprise import Surprise
+from business.dice.face.special_on_melee.surprise import Surprise
 from business.dice.face.special_on_melee.swallow import Swallow
 
-from business.dice.face.tail import Tail
-from business.dice.face.teleport import Teleport
-from business.dice.face.trample import Trample
+from business.dice.face.melee_with_reroll.tail import Tail
+from business.dice.face.special_on_non_maneuver.teleport import Teleport
+from business.dice.face.versatile_result.trample import Trample
 from business.dice.face.special_on_melee.trumpet import Trumpet
 
-from business.dice.face.vanish import Vanish
-from business.dice.face.volley import Volley
+from business.dice.face.save_with_special.vanish import Vanish
+from business.dice.face.save_with_special.volley import Volley
 
 from business.dice.face.wave import Wave
 from business.dice.face.wayfare import Wayfare
 from business.dice.face.special_on_melee.web import Web
-from business.dice.face.wild_growth import WildGrowth
-from business.dice.face.wither import Wither
+from business.dice.face.save_with_special.wild_growth import WildGrowth
+from business.dice.face.special_on_melee.wither import Wither

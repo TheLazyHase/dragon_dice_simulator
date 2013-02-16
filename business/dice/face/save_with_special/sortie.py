@@ -16,14 +16,27 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import SpecialOnMelee
-from business.effect import TargetedKillEffect
+from business.dice.face import Face, Save, Melee, SAI
 
-class Slay(SpecialOnMelee):
+class Sortie(SAI, Save, Melee):
     @property
     def name(self):
-        return 'Slay'
+        return '%s Sortie' % self.amount
 
-    @property
-    def get_special(self):
-        return TargetedKillEffect(1)
+    def icon_by_type(self, icon_type):
+        value = 0
+        if (icon_type == Face.ICON_MELEE):
+            if (self.type_roll.is_melee):
+                value = self.amount
+        elif (icon_type == Face.ICON_SAVE):
+            if (self.type_roll.is_save):
+                value = self.amount
+        return value
+
+    icon = {
+        Face.ICON_MELEE: 1,
+        Face.ICON_MISSILE: 0,
+        Face.ICON_MANEUVER: 0,
+        Face.ICON_MAGIC: 0,
+        Face.ICON_SAVE: 1,
+    }

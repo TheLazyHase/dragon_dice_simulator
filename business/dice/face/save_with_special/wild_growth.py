@@ -16,14 +16,17 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face.save import Save
-from business.dice.face.sai import SAI
+from business.dice.face import SAI, Save
+from business.effect import PromotionEffect, PromotionSaveEffect
 
-class Bash(SAI, Save):
+class WildGrowth(SAI, Save):
     @property
     def name(self):
-        return '%s Bash' % self.amount
+        return '%s Wild Growth' % self.amount
 
-    @property
-    def special_effect(self):
-        print 'NYI'
+    def on_special(self):
+        value = None
+
+        if (not self.type_roll.is_active_maneuver):
+            value = PromotionSaveEffect(self.amount)
+        return value

@@ -26,6 +26,6 @@ class SpecialOnMelee(SAI, Face):
     @property
     def on_special(self):
         value = None
-        if (self.type_roll.is_melee and self.type_roll.is_action):
+        if (self.type_roll.is_active_melee):
             value = self.get_special()
         return value

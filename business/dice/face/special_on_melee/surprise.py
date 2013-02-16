@@ -16,17 +16,13 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face.melee import Melee
-from business.dice.face.sai import SAI
+from business.dice.face import SpecialOnMelee
+from business.effect import InflictNoRetaliationEffect
 
-class Charge(SAI, Melee):
+class Surprise(SpecialOnMelee):
     @property
     def name(self):
-        return 'Charge'
+        return 'Surprise'
 
-    def icon_by_type(self, icon_type):
-        return 0
-
-    @property
-    def special_effect(self):
-        print 'NYI'
+    def get_special(self):
+        return InflictNoRetaliationEffect(1)

@@ -16,26 +16,13 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Face, Missile, SAI
+from business.dice.face import SAI, Save
 
-class MissileSpecialEffect(SAI, Missile):
-
-    def icon_by_type(self, icon_type):
-        value = 0
-        if (icon_type == Face.ICON_MISSILE):
-            if (self.type_roll.is_dragon):
-                value = self.amount
-            elif (self.type_roll.is_melee):
-                if (self.type_roll.is_avoidance):
-                    #On avoidance, regular melee icon are generated
-                    value = self.amount
-                else:
-                    value = 0 #But the special effect will be put on the stack
-        return value
+class Bash(SAI, Save):
+    @property
+    def name(self):
+        return '%s Bash' % self.amount
 
     @property
-    def special_effect(self):
-        value = None
-        if (self.type_roll.is_missile and self.type_roll.is_action):
-            value = self.get_special()
-        return value
+    def on_special(self):
+        print 'NYI'

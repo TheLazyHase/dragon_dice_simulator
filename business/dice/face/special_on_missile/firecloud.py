@@ -16,20 +16,19 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Melee, SAI
-from business.effect import InflictNoRetaliationEffect
+from business.dice.face import Face, SAI
 
-class Surprise(SAI, Melee):
+class Firecloud(SAI, Face):
     @property
     def name(self):
-        return 'Surprise'
+        return '%s Firecloud' % self.amount
 
     def icon_by_type(self, icon_type):
         return 0
 
     @property
-    def special_effect(self):
+    def on_special(self):
         value = None
-        if (self.type_roll.is_melee and (not self.type_roll.is_avoidance)):
-            value = InflictNoRetaliationEffect(1)
+        if (self.type_roll.is_active_missile):
+            print 'NYI'
         return value

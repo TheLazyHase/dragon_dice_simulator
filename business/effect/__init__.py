@@ -46,8 +46,9 @@ from business.effect.halved_result import InflictHalvedResultEffect, HalvedResul
 from business.effect.no_retaliation_effect import InflictNoRetaliationEffect, NoRetaliationEffect
 from business.effect.save_malus import InflictSaveMalusEffect, SaveMalusEffect
 from business.effect.racial_malus_choice import RacialMalusChoiceEffect
-from business.effect.targeted_damage import TargetedDamageEffect
-from business.effect.targeted_kill import TargetedKillEffect
+from business.effect.targeted import TargetedBuryEffect
+from business.effect.targeted import TargetedDamageEffect
+from business.effect.targeted import TargetedKillEffect
 from business.effect.unsaveable_damage import UnsaveableDamageEffect
 from business.effect.unpreventable_damage import UnpreventableDamageEffect
 from business.effect.versatile_icon import VersatileIconEffect

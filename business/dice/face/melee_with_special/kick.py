@@ -16,9 +16,9 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import MeleeSpecialEffect
+from business.dice.face import MeleeWithSpecial
 
-class Kick(MeleeSpecialEffect):
+class Kick(MeleeWithSpecial):
     @property
     def name(self):
         return '%s Kick' % self.amount

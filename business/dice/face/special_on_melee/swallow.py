@@ -17,14 +17,13 @@
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
 from business.dice.face import SpecialOnMelee
-from business.effect import TargetedKillEffect
+from business.effect import TargetedBuryEffect
 
 class Swallow(SpecialOnMelee):
     @property
     def name(self):
         return 'Swallow'
 
-    @property
     def get_special(self):
-        return TargetedKillEffect(1)
+        return TargetedBuryEffect(1)
 
