@@ -25,8 +25,12 @@ class Attune(SAI, Magic):
         return '%s Attune' % self.amount
 
     @property
-    def special_effect(self):
+    def on_special(self):
         value = None
         if self.type_roll.is_active_magic:
             value = AttuneEffect(1)
         return value
+
+    @property
+    def description(self):
+        return ['On magic action, generate magic results of any color.', 'Special: On magic action, convert another dice magic icon (not ID or SAI) to the same color as this dice\'s result']

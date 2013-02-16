@@ -92,8 +92,25 @@ class Face(object):
         return self.icons(Face.ICON_SAVE)
 
     @property
-    def special_effect(self):
+    def on_instant(self):
         return None
+
+    @property
+    def on_special(self):
+        return None
+
+    @property
+    def on_normal(self):
+        return None
+
+    @property
+    def on_late(self):
+        return None
+
+    @property
+    def on_delayed(self):
+        return None
+
     @property
     def is_rerolled(self):
         return False
@@ -111,7 +128,7 @@ from business.dice.face.group_id import GroupID
 #SAI
 #templates
 from business.dice.face.sai import SAI
-from business.dice.face.melee_special_effect import MeleeSpecialEffect
+from business.dice.face.melee_with_special import MeleeWithSpecial
 from business.dice.face.missile_special_effect import MissileSpecialEffect
 from business.dice.face.maneuver_special_effect import ManeuverSpecialEffect
 from business.dice.face.save_special_effect import SaveSpecialEffect
@@ -153,10 +170,10 @@ from business.dice.face.fly import Fly
 from business.dice.face.frost_breath import FrostBreath
 
 from business.dice.face.galeforce import Galeforce
-from business.dice.face.gore import Gore
+from business.dice.face.melee_with_special.gore import Gore
 
 from business.dice.face.howl import Howl
-from business.dice.face.hug import Hug
+from business.dice.face.melee_with_special.hug import Hug
 
 from business.dice.face.illusion import Illusion
 from business.dice.face.impale import Impale
@@ -180,11 +197,11 @@ from business.dice.face.screech import Screech
 from business.dice.face.seize import Seize
 from business.dice.face.slay import Slay
 from business.dice.face.sleep import Sleep
-from business.dice.face.smite import Smite
+from business.dice.face.melee_with_special.smite import Smite
 from business.dice.face.smother import Smother
 from business.dice.face.sneak_attack import SneakAttack
 from business.dice.face.sortie import Sortie
-from business.dice.face.stomp import Stomp
+from business.dice.face.melee_with_special.stomp import Stomp
 from business.dice.face.stone import Stone
 from business.dice.face.stun import Stun
 from business.dice.face.summon_dragon import SummonDragon
