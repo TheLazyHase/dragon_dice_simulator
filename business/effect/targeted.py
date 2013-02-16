@@ -45,3 +45,18 @@ class TargetedBuryEffect(Effect):
     def before_resolution(self, army, opposing_armies):
         print 'Placeholder - here the targeted death effect should be resolved and saved against'
         self.expired = True
+
+class TargetedDamageEffect(Effect):
+
+    @property
+    def name(self):
+        return '%s damage targeted as the active player choose' % self.amount
+
+    @property
+    def key(self):
+        return 'td'
+
+    def before_resolution(self, army, opposing_armies):
+        print 'Placeholder - here the targeted damage should be resolved and saved by the opposing player'
+        self.expired = True
+
