@@ -23,6 +23,9 @@ class Illusion(SAI, Face):
     def name(self):
         return 'Illusion' % self.amount
 
+    def icon_by_type(self, icon_type):
+        return 0
+
     @property
     def get_special(self):
         print 'NYI'

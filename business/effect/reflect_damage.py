@@ -16,28 +16,21 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import SAI, Face
-from business.effect import ElevateSaveDoublingEffect, ElevateMissileDoublingEffect, ElevateSaveOrMissileDoublingEffect
+from business.effect import Effect
 
-class Elevate(SAI, Face):
+class ReflectDamageEffect(Effect):
     @property
     def name(self):
-        return '%s Elevate' % self.amount
-
-    def icon_by_type(self, icon_type):
-        value = 0
-        if (icon_type == Face.ICON_MANEUVER):
-            if (self.type_roll.is_maneuver):
-                value = self.amount
-        return value
+        return 'Chose %s opposing unit or dragons that produced normal melee damage. Generate this amount of save and inflict this amount of damage to the chosen unit or dragon ; units may be rolled to save against thoses damages' % self.amount
 
     @property
-    def on_special(self):
-        value = None
-        if self.type_roll.is_dragon:
-            value = ElevateSaveOrMissileDoublingEffect(1)
-        elif self.type_roll.is_active_missile:
-            value = ElevateMissileDoublingEffect(1)
-        elif self.type_roll.is_melee_save:
-            value = ElevateSaveDoublingEffect(1)
-        return value
+    def key(self):
+        return 'itd'
+
+    def before_resolution(self, army, opposing_armies):
+        print 'Placeholder - here the reflect damage should be handled'
+        self.expired = True
+
+    def stack(self, effect):
+        return True
+

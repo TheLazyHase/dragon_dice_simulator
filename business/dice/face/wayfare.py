@@ -16,13 +16,24 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Face, SAI
+from business.dice.face import Maneuver, SAI
+from business.effect import EscapeItemEffect
 
-class Wayfare(SAI, Face):
+class Wayfare(SAI, Maneuver):
     @property
     def name(self):
-        return '%s Wave' % self.amount
+        return '%s Wayfare' % self.amount
+
+    def icon_by_type(self, icon_type):
+        value = 0
+        if (icon_type == Face.ICON_MANEUVER):
+            if self.type_roll.is_maneuver:
+                value = self.amount
+        return value
 
     @property
     def get_special(self):
-        print 'NYI'
+        value = None
+        if self.type_roll.is_maneuver or self.type_roll.is_dragon:
+            value = EscapeItemEffect(1)
+        return value

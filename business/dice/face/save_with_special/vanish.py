@@ -17,12 +17,23 @@
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
 from business.dice.face import Save, SAI
+from business.effect import EscapeAndSaveEffect
 
 class Vanish(SAI, Save):
     @property
     def name(self):
         return '%s Vanish' % self.amount
 
+    def icon_by_type(self, icon_type):
+        value = 0
+        if (icon_type == Face.ICON_SAVE):
+            if self.type_roll.is_save:
+                value = self.amount
+        return value
+
     @property
-    def get_special(self):
-        print 'NYI'
+    def on_special(self):
+        value = None
+        if self.type_roll.is_save:
+            value = EscapeAndSaveEffect(self.amount)
+        return value

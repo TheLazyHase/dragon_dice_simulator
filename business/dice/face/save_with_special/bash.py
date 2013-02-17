@@ -16,13 +16,26 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import SAI, Save
+from business.dice.face import SAI, Save, Face
+from business.effect import ReflectDamageEffect
 
 class Bash(SAI, Save):
     @property
     def name(self):
         return '%s Bash' % self.amount
 
+    def icon_by_type(self, icon_type):
+        value = 0
+        if (icon_type == Face.ICON_SAVE):
+            if self.type_roll.is_melee_save or self.type_roll.is_dragon:
+                value = 0 #But the special effect will be put on the stack
+            else:
+                value = self.amount
+        return value
+
     @property
     def on_special(self):
-        print 'NYI'
+        value = None
+        if self.type_roll.is_melee_save or self.type_roll.is_dragon:
+            value = ReflectDamageEffect(1)
+        return value

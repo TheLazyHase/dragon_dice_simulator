@@ -23,6 +23,10 @@ class Roll(object):
         return False
 
     @property   
+    def is_individual(self):
+        return False
+
+    @property   
     def is_active_player(self):
         return False
 

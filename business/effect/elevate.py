@@ -18,28 +18,50 @@
 
 from business.effect import Effect
 
-class PromotionSaveEffect(Effect):
+class ElevateSaveDoublingEffect(Effect):
     @property
     def name(self):
-        return 'Promote up to %s units by foregoing the same number of save' % self.amount
-
-    def before_resolution(self, army, opposing_armies):
-        print 'Placeholder - here human have to choose between icon type'
-        self.expired = True
+        return 'Double the save result of %s units' % self.amount
 
     @property
     def key(self):
-        return 'promotion_or_save'
-
-class PromotionEffect(Effect):
-    @property
-    def name(self):
-        return 'Promote %s units' % self.amount
+        return 'elevate_save'
 
     def before_resolution(self, army, opposing_armies):
-        print 'Placeholder - here human promote unit'
+        print 'Placeholder - here the surprise effect should be put on the opposing army'
         self.expired = True
+
+    def stack(self, effect):
+        return True
+
+class ElevateMissileDoublingEffect(Effect):
+    @property
+    def name(self):
+        return 'Double the missile result of %s units' % self.amount
 
     @property
     def key(self):
-        return 'promotion'
+        return 'elevate_missile'
+
+    def before_resolution(self, army, opposing_armies):
+        print 'Placeholder - here the surprise effect should be put on the opposing army'
+        self.expired = True
+
+    def stack(self, effect):
+        return True
+
+class ElevateSaveOrMissileDoublingEffect(Effect):
+    @property
+    def name(self):
+        return 'Double the missile or save result of %s units' % self.amount
+
+    @property
+    def key(self):
+        return 'elevate_dragon'
+
+    def before_resolution(self, army, opposing_armies):
+        print 'Placeholder - here the surprise effect should be put on the opposing army'
+        self.expired = True
+
+    def stack(self, effect):
+        return True

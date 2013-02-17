@@ -17,13 +17,13 @@
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
 from business.dice.face import SpecialOnMelee
+from business.effect import TargetedKillBuryingByHealthEffect
 
 class Poison(SpecialOnMelee):
     @property
     def name(self):
         return '%s Poison' % self.amount
 
-    @property
     def get_special(self):
-        print 'NYI'
+        return TargetedKillBuryingByHealthEffect(self.amount)
 

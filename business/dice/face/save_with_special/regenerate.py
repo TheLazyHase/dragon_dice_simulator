@@ -17,12 +17,24 @@
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
 from business.dice.face import Save, SAI
+from business.effect import RegenerationEffect
 
 class Regenerate(SAI, Save):
     @property
     def name(self):
         return '%s Regenerate' % self.amount
 
+    def icon_by_type(self, icon_type):
+        value = 0
+        if (icon_type == Face.ICON_SAVE):
+            if not self.type_roll.is_maneuver:
+                value = self.amount
+        return value
+
+
     @property
     def on_special(self):
-        print 'NYI'
+        value = None
+        if not self.type_roll.is_maneuver:
+            value = RegenerationEffect(self.amount)
+        return value

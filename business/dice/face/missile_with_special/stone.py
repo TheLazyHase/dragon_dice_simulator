@@ -25,4 +25,4 @@ class Stone(MissileWithSpecial):
         return '%s Stone' % self.amount
 
     def get_special(self):
-        print 'NYI'
+        return UnpreventableDamageEffect(self.amount)

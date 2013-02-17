@@ -29,9 +29,9 @@ class DiceFaceTemplate(object):
         self.amount = amount
         self.picture = picture
 
-    def get_instance(self):
+    def get_instance(self, dice=None):
         face_class = getattr(faceDefinition, self.class_name)
-        face = face_class(self.amount)
+        face = face_class(self.amount, dice)
         face.side_number = self.side_number
         face.picture = self.picture
         return face

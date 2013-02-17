@@ -17,7 +17,7 @@
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
 from business.dice.face import MissileWithSpecial
-from business.effect import TargetedUnsecableBuryingDamage
+from business.effect import TargetedUnsecableBuryingDamageEffect
 
 class FlamingArrow(MissileWithSpecial):
     @property
@@ -26,4 +26,4 @@ class FlamingArrow(MissileWithSpecial):
 
     @property
     def get_special(self):
-        return TargetedUnsecableBuryingDamage(1, increment=self.amount)
+        return TargetedUnsecableBuryingDamageEffect(1, increment=self.amount)

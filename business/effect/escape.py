@@ -18,22 +18,34 @@
 
 from business.effect import Effect
 
-class UnpreventableDamageEffect(Effect):
-
+class EscapeAndSaveEffect(Effect):
     @property
     def name(self):
-        return 'Inflict %s damages unpreventable by any mean' % self.amount
+        return 'This unit generate %s save, and then may be moved to another terrain or to the reserve without losing thoses' % self.amount
 
     @property
     def key(self):
-        return 'unpreventable_damage'
-        
-class ArmyUnpreventableDamageEffect(Effect):
+        return 'escape_save'
 
+    def before_resolution(self, army, opposing_armies):
+        print 'Placeholder - here the surprise effect should be put on the opposing army'
+        self.expired = True
+
+    def stack(self, effect):
+        return True
+
+class EscapeItemEffect(Effect):
     @property
     def name(self):
-        return 'Choose an army. Inflict %s damages unpreventable by any mean. Dragonkin killed are buried.' % self.amount
+        return 'This item and one unit able to carry it may be moved to another terrain or to the reserve'
 
     @property
     def key(self):
-        return 'army_unpreventable_damage'
+        return 'escape_save'
+
+    def before_resolution(self, army, opposing_armies):
+        print 'Placeholder - here the surprise effect should be put on the opposing army'
+        self.expired = True
+
+    def stack(self, effect):
+        return True

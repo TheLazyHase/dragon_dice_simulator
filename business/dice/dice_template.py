@@ -37,10 +37,10 @@ class DiceTemplate(object):
 
         self.elements = []
 
-    def get_instancied_faces(self):
+    def get_instancied_faces(self, dice):
         faces = []
         for face_template in self.faces:
-            faces.append(face_template.get_instance())
+            faces.append(face_template.get_instance(dice))
         return faces        
 
     @property

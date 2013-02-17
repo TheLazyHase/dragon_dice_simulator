@@ -17,6 +17,7 @@
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
 from business.dice.face import MeleeWithSpecial
+from business.effect import TargetedUnsecableInstantBuryingDamageEffect
 
 class Gore(MeleeWithSpecial):
     @property
@@ -24,4 +25,4 @@ class Gore(MeleeWithSpecial):
         return '%s Gore' % self.amount
 
     def get_special(self):
-        print 'NYI'
+        return TargetedUnsecableInstantBuryingDamageEffect(1, self.amount)

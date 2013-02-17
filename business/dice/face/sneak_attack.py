@@ -16,13 +16,24 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Melee, SAI
+from business.dice.face import Melee, SAI, Face
+from business.effect import ArmyUnpreventableDamageEffect
 
 class SneakAttack(SAI, Melee):
     @property
     def name(self):
         return '%s Sneak Attack' % self.amount
 
+    def icon_by_type(self, icon_type):
+        value = 0
+        if (icon_type == Face.ICON_MELEE):
+            if (self.type_roll.is_dragon or self.type_roll.is_active_melee):
+                value = self.amount
+        return value
+
     @property
-    def get_special(self):
-        print 'NYI'
+    def on_special(self):
+        value = None
+        if self.type_roll.is_active_missile or self.type_roll.is_active_magic:
+            value = ArmyUnpreventableDamageEffect(self.amount)
+        return value

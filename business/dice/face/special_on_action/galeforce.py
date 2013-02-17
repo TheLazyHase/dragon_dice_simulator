@@ -23,6 +23,9 @@ class Galeforce(SAI, Face):
     def name(self):
         return 'Galeforce'
 
+    def icon_by_type(self, icon_type):
+        return 0
+
     @property
-    def get_special(self):
+    def on_special(self):
         print 'NYI'

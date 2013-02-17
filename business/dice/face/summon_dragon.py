@@ -17,12 +17,22 @@
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
 from business.dice.face import Face, SAI
+from business.effect import DragonSummoningEffect
 
 class SummonDragon(SAI, Face):
     @property
     def name(self):
         return 'Summon Dragon'
 
+    def is_rerolled(self):
+        value = False
+        if self.type_roll.is_active_magic:
+            value = True
+        return value
+
     @property
-    def get_special(self):
-        print 'NYI'
+    def on_special(self):
+        value = None
+        if self.type_roll.is_active_magic:
+            value = DragonSummoningEffect(1, self.dice.elements)
+        return value

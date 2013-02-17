@@ -16,28 +16,27 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import SAI, Face
-from business.effect import ElevateSaveDoublingEffect, ElevateMissileDoublingEffect, ElevateSaveOrMissileDoublingEffect
+from business.effect import Effect
 
-class Elevate(SAI, Face):
+class FlurryRerollEffect(Effect):
+
+    def __init__(self, amount, unit):
+        self.amount = amount
+        self.expired = False
+        self.unit = unit
+
     @property
     def name(self):
-        return '%s Elevate' % self.amount
-
-    def icon_by_type(self, icon_type):
-        value = 0
-        if (icon_type == Face.ICON_MANEUVER):
-            if (self.type_roll.is_maneuver):
-                value = self.amount
-        return value
+        return 'Can produce %s save, or %s melee and reroll the dice' %(self.amount, self.amount, self.unit.name)
 
     @property
-    def on_special(self):
-        value = None
-        if self.type_roll.is_dragon:
-            value = ElevateSaveOrMissileDoublingEffect(1)
-        elif self.type_roll.is_active_missile:
-            value = ElevateMissileDoublingEffect(1)
-        elif self.type_roll.is_melee_save:
-            value = ElevateSaveDoublingEffect(1)
-        return value
+    def key(self):
+        return 'flurry_reroll'
+
+    def before_resolution(self, army, opposing_armies):
+        print 'Placeholder - here the choice between save and melee should be done'
+        self.expired = True
+
+    def stack(self, effect):
+        return True
+

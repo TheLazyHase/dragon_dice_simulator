@@ -23,6 +23,12 @@ class CreateFireminions(SAI, ID):
     def type(self):
         return Face.TYPE_SAI
 
+    def icon_by_type(self, icon_type):
+        value = 0
+        if not self.type_roll.is_individual:
+            value = self.amount
+        return value
+
     @property
     def name(self):
         return '%s Create Fireminions' % self.amount

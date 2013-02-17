@@ -17,12 +17,12 @@
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
 from business.dice.face import SpecialOnMelee
+from business.effect import TargetedManeuverKillByHealthEffect
 
 class Smother(SpecialOnMelee):
     @property
     def name(self):
         return '%s Smother' % self.amount
 
-    @property
     def get_special(self):
-        print 'NYI'
+        return TargetedManeuverKillByHealthEffect(self.amount)

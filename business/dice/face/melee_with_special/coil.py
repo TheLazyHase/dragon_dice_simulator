@@ -24,7 +24,6 @@ class Coil(MeleeWithSpecial):
     def name(self):
         return '%s Coil' % self.amount
 
-    @property
     def get_special(self):
-        return SaveableBrawl(self.amount, self)
+        return SaveableBrawl(self.amount, self.dice)
 

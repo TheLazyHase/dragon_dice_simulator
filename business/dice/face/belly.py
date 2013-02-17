@@ -16,9 +16,10 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import SAI, Save
+from business.dice.face import SAI, Face
+from business.effect import BellyMalusEffect
 
-class Belly(SAI, Save):
+class Belly(SAI, Face):
     @property
     def name(self):
         return 'Belly'
@@ -28,4 +29,4 @@ class Belly(SAI, Save):
 
     @property
     def special_effect(self):
-        print 'NYI'
+        return BellyMalusEffect(self.amount)

@@ -18,10 +18,10 @@
 
 from business.effect import Effect
 
-class PromotionSaveEffect(Effect):
+class BellyMalusEffect(Effect):
     @property
     def name(self):
-        return 'Promote up to %s units by foregoing the same number of save' % self.amount
+        return '%s dragonkin autosave are cancelled.' % self.amount
 
     def before_resolution(self, army, opposing_armies):
         print 'Placeholder - here human have to choose between icon type'
@@ -29,17 +29,52 @@ class PromotionSaveEffect(Effect):
 
     @property
     def key(self):
-        return 'promotion_or_save'
+        return 'malus_belly'
 
-class PromotionEffect(Effect):
+class InflictSaveMalusEffect(Effect):
+
     @property
     def name(self):
-        return 'Promote %s units' % self.amount
-
-    def before_resolution(self, army, opposing_armies):
-        print 'Placeholder - here human promote unit'
-        self.expired = True
+        return 'Inflict a save malus of %s on the opposing army' % self.amount
 
     @property
     def key(self):
-        return 'promotion'
+        return 'inflict_save_malus'
+
+    def before_resolution(self, army, opposing_armies):
+        print 'Placeholder - here the malus should be put on the opposing army'
+        self.expired = True
+
+class SaveMalusEffect(Effect):
+
+    @property
+    def name(self):
+        return 'Save malus : %s' % self.amount
+
+    @property
+    def key(self):
+        return 'save_malus'
+
+class InflictManeuverMalusEffect(Effect):
+
+    @property
+    def name(self):
+        return 'Inflict a maneuver malus of %s on the opposing army' % self.amount
+
+    @property
+    def key(self):
+        return 'inflict_maneuver_malus'
+
+    def before_resolution(self, army, opposing_armies):
+        print 'Placeholder - here the malus should be put on the opposing army'
+        self.expired = True
+
+class ManeuverMalusEffect(Effect):
+
+    @property
+    def name(self):
+        return 'Maneuver malus : %s' % self.amount
+
+    @property
+    def key(self):
+        return 'maneuver_malus'

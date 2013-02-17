@@ -46,8 +46,9 @@ class Face(object):
         ICON_SAVE: 0,
     }
 
-    def __init__(self, amount):
+    def __init__(self, amount, dice):
         self.amount = amount
+        self.dice = dice
 
     @property   
     def type(self):
@@ -153,7 +154,7 @@ from business.dice.face.save_with_special.counter import Counter
 from business.dice.face.versatile_result.create_fireminions import CreateFireminions
 from business.dice.face.missile_with_special.crush import Crush
 
-from business.dice.face.melee_with_special.decapitate import Decapitate
+from business.dice.face.special_on_melee.decapitate import Decapitate
 from business.dice.face.dispel_magic import DispelMagic
 from business.dice.face.melee_with_reroll.double_strike import DoubleStrike
 
@@ -176,7 +177,7 @@ from business.dice.face.special_on_attack.howl import Howl
 from business.dice.face.melee_with_special.hug import Hug
 
 from business.dice.face.special_on_action.illusion import Illusion
-from business.dice.face.missile_with_special.impale import Impale
+from business.dice.face.special_on_missile.impale import Impale
 
 from business.dice.face.melee_with_special.kick import Kick
 

@@ -16,16 +16,13 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-from business.dice.face import Melee, SAI
+from business.dice.face import SpecialOnMelee
+from business.effect import TargetedIDKillEffect, TargetedJawDragonKillEffect
 
-class Choke(SAI, Melee):
+class Choke(SpecialOnMelee):
     @property
     def name(self):
         return '%s Choke' % self.amount
 
-    def icon_by_type(self, icon_type):
-        return 0
-
-    @property
-    def special_effect(self):
-        print 'NYI'
+    def get_special(self):
+        return TargetedIDKillByHealthEffect(self.amount)

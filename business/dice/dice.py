@@ -32,7 +32,7 @@ class Dice(object):
 
     @reconstructor
     def hydrate(self):
-        self.faces = self.template.get_instancied_faces()
+        self.faces = self.template.get_instancied_faces(self)
         self.autoresult = {
             Face.ICON_MELEE: self.template.automelee,
             Face.ICON_MISSILE: self.template.automissile,

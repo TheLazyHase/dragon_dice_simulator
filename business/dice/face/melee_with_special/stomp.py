@@ -17,7 +17,7 @@
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
 from business.dice.face import MeleeWithSpecial
-from business.effect import UnpreventableDamageEffect
+from business.effect import TargetedManeuverKillByHealthEffect
 
 class Stomp(MeleeWithSpecial):
     @property
@@ -25,4 +25,4 @@ class Stomp(MeleeWithSpecial):
         return '%s Stomp' % self.amount
 
     def get_special(self):
-        print 'NYI'
+        return TargetedManeuverKillByHealthEffect(self.amount)

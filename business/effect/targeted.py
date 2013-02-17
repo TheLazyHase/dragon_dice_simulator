@@ -32,6 +32,48 @@ class TargetedKillEffect(Effect):
         print 'Placeholder - here the targeted death effect should be resolved and saved against'
         self.expired = True
 
+class TargetedManeuverKillByHealthEffect(Effect):
+
+    @property
+    def name(self):
+        return 'Target unit(s) worth %s health or less  units must roll a maneuver or die' % self.amount
+
+    @property
+    def key(self):
+        return 'targeted_maneuver_kill_by_health'
+
+    def before_resolution(self, army, opposing_armies):
+        print 'Placeholder - here the targeted death effect should be resolved and saved against'
+        self.expired = True
+
+class TargetedManeuverKillBuryingByHealthEffect(Effect):
+
+    @property
+    def name(self):
+        return 'Target unit(s) worth %s health or less  units must roll a maneuver or die. Thoses who die must roll a save or be buried.' % self.amount
+
+    @property
+    def key(self):
+        return 'targeted_maneuver_kill_bury_by_health'
+
+    def before_resolution(self, army, opposing_armies):
+        print 'Placeholder - here the targeted death effect should be resolved and saved against'
+        self.expired = True
+
+class TargetedKillBuryingByHealthEffect(Effect):
+
+    @property
+    def name(self):
+        return 'Target unit(s) worth %s health or less  units must roll a save or die. Thoses who die must roll a save or be buried.' % self.amount
+
+    @property
+    def key(self):
+        return 'targeted_kill_bury_by_health'
+
+    def before_resolution(self, army, opposing_armies):
+        print 'Placeholder - here the targeted death effect should be resolved and saved against'
+        self.expired = True
+
 class TargetedBuryEffect(Effect):
 
     @property
@@ -118,6 +160,35 @@ class TargetedUnsecableBuryingDamageEffect(Effect):
         print 'Placeholder - here the targeted damage should be resolved and saved by the opposing player'
         self.expired = True
 
+class TargetedUnsecableInstantBuryingDamageEffect(Effect):
+
+    def __init__(self, amount, increment):
+        self.amount = amount
+        self.expired = False
+        self.increment = increment
+
+    @property
+    def name(self):
+        return '%s chosen unit suffer %s damages ; killed unit are buried' % (self.amount, self.increment)
+
+    def stack(self, effect):
+        stackable = False
+        if (effect.key == self.key):
+            if (self.increment == effect.increment):
+                self.amount += effect.amount
+                stackable = True
+        else:
+            raise RuntimeError('Trying to stack two different effect')
+        return stackable
+
+    @property
+    def key(self):
+        return 'targeted_unsecable_instant_burying_damage'
+
+    def before_resolution(self, army, opposing_armies):
+        print 'Placeholder - here the targeted damage should be resolved and saved by the opposing player'
+        self.expired = True
+
 class TargetedIDKillEffect(Effect):
 
     @property
@@ -137,12 +208,12 @@ class TargetedIDKillByHealthEffect(Effect):
 
     @property
     def name(self):
-        return 'After save are rolled, as an Instant effect, choose and kill up to %s worth of unit(s) that rolled an ID' % (self.amount)
+        return 'After save are rolled, as an Instant effect, choose and kill up to %s worth of health unit(s) that rolled an ID' % (self.amount)
 
 
     @property
     def key(self):
-        return 'targeted_ID_kill'
+        return 'targeted_ID_kill_by_health'
 
     def before_resolution(self, army, opposing_armies):
         print 'Placeholder - here the targeted damage should be resolved and saved by the opposing player'
@@ -153,7 +224,7 @@ class TargetedJawDragonKillEffect(Effect):
     def __init__(self, amount, default_damage):
         self.amount = amount
         self.expired = False
-        self.increment = increment
+        self.default_damage = default_damage
 
     def stack(self, effect):
         stackable = False
@@ -172,7 +243,7 @@ class TargetedJawDragonKillEffect(Effect):
 
     @property
     def key(self):
-        return 'targeted_ID_kill'
+        return 'targeted_jaws_kill'
 
     def before_resolution(self, army, opposing_armies):
         print 'Placeholder - here the targeted damage should be resolved and saved by the opposing player'
