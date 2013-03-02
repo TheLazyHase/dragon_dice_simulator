@@ -21,13 +21,17 @@ from business.dice.face import Face
 
 class VersatileIconEffect(Effect):
 
+    @property
+    def name(self):
+        return 'Choose result'
+
     def __init__(self, amount, option=[]):
         self.amount = amount
         self.expired = False
         self.option = option
 
     @property
-    def name(self):
+    def description(self):
         return '%s icon to choose between %s' % (self.amount, ', '.join(Face.ICON_NAME[face_type] for face_type in self.option))
 
     def stack(self, effect):
@@ -46,4 +50,4 @@ class VersatileIconEffect(Effect):
 
     @property
     def key(self):
-        return 'vi'
+        return 'versatile_icon'

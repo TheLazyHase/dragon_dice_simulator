@@ -21,7 +21,11 @@ from business.effect import Effect
 class InflictHalvedResultEffect(Effect):
     @property
     def name(self):
-        return ('Opposing results are divided by %s because of %s until next turn' % (pow(2, self.amount), self.type))
+        return 'Frostbreath'
+
+    @property
+    def description(self):
+        return 'Opposing results are divided by %s because of %s until next turn.' % (pow(2, self.amount), self.type)
 
     def __init__(self, amount, division_type='None'):
         self.amount = amount

@@ -17,15 +17,19 @@
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
 from business.dice.face import Face, SAI
+from business.effect import IllusionEffect
 
 class Illusion(SAI, Face):
     @property
     def name(self):
-        return 'Illusion' % self.amount
+        return 'Illusion'
 
     def icon_by_type(self, icon_type):
         return 0
 
     @property
-    def get_special(self):
-        print 'NYI'
+    def on_special(self):
+        value = None
+        if self.type_roll.is_action:
+            value = IllusionEffect(self.amount)
+        return value

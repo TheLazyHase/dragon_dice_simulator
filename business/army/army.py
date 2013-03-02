@@ -23,7 +23,8 @@ from business.effect import RacialMalusChoiceEffect
 from sqlalchemy.orm import reconstructor
 
 class Army(object):
-    def __init__(self, position=None):
+    def __init__(self, name, position=None):
+        self.name = name
         self.components = []
         self.position = position
 
@@ -88,7 +89,8 @@ class Army(object):
         #Racial substitution are put in this again to make thing simpler
         self.racial_substitution = {}
 
-        self.effect = []
+        self.instant_effect = []
+        self.special_effect = []
 
     @property
     def result_description(self):
@@ -203,15 +205,24 @@ class Army(object):
 
         #Check rolled effect
         for dice in self.components:
-            if (dice.special_effect != None):
-                for effect in dice.special_effect:
+            if (dice.on_instant != None):
+                for effect in dice.on_instant:
                     #We hope an army will not drown under special effect here :x
                     have_stacked = False
-                    for old_effect in self.effect:
+                    for old_effect in self.instant_effect:
                         if (old_effect.key == effect.key):
                             have_stacked = old_effect.stack(effect)
                     if (not have_stacked):
-                        self.effect.append(effect)
+                        self.instant_effect.append(effect)
+            if (dice.on_special != None):
+                for effect in dice.on_special:
+                    #We hope an army will not drown under special effect here :x
+                    have_stacked = False
+                    for old_effect in self.special_effect:
+                        if (old_effect.key == effect.key):
+                            have_stacked = old_effect.stack(effect)
+                    if (not have_stacked):
+                        self.special_effect.append(effect)
         return self
 
     def get_rolled_effect(self):
@@ -221,19 +232,10 @@ class Army(object):
     @property
     def effect_description(self):
         result = []
-        for effect in self.effect:
+        for effect in self.special_effect:
             result.append('* %s' % effect.name)
 
         return result
-
-    def do_before_resolution_effect(self, opposing_armies):
-        cleaned_effect_list = []
-        for effect in self.effect:
-            effect.before_resolution(self, opposing_armies)
-            if not effect.expired:
-                cleaned_effect_list.append(effect)
-        self.effect = cleaned_effect_list
-        return self
 
     #desired_race is used to get result for a particular race
     #it does not use racial icon replacement, because it is used by racial icon replacement, and this could lead to infinite loop
@@ -307,7 +309,7 @@ class Army(object):
                         result_by_race[race] = 0
                 else:
                     #Choice cannot be done automatically so add a effect for that
-                    self.effect.append(RacialMalusChoiceEffect(remaining_malus, relevant_race))
+                    self.special_effect.append(RacialMalusChoiceEffect(remaining_malus, relevant_race))
         #Diviser
         result = floor(result/self.regular_diviser[icon_type])
         for race, total in result_by_race.items():

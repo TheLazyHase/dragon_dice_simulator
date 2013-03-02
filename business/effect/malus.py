@@ -21,6 +21,10 @@ from business.effect import Effect
 class BellyMalusEffect(Effect):
     @property
     def name(self):
+        return 'Belly'
+
+    @property
+    def description(self):
         return '%s dragonkin autosave are cancelled.' % self.amount
 
     def before_resolution(self, army, opposing_armies):
@@ -32,10 +36,13 @@ class BellyMalusEffect(Effect):
         return 'malus_belly'
 
 class InflictSaveMalusEffect(Effect):
-
     @property
     def name(self):
-        return 'Inflict a save malus of %s on the opposing army' % self.amount
+        return 'Inflict Save Malus'
+
+    @property
+    def description(self):
+        return 'Inflict a save malus of %s on the opposing army.' % self.amount
 
     @property
     def key(self):
@@ -46,9 +53,12 @@ class InflictSaveMalusEffect(Effect):
         self.expired = True
 
 class SaveMalusEffect(Effect):
-
     @property
     def name(self):
+        return 'Save Malus'
+
+    @property
+    def description(self):
         return 'Save malus : %s' % self.amount
 
     @property
@@ -56,10 +66,13 @@ class SaveMalusEffect(Effect):
         return 'save_malus'
 
 class InflictManeuverMalusEffect(Effect):
-
     @property
     def name(self):
-        return 'Inflict a maneuver malus of %s on the opposing army' % self.amount
+        return 'Inflict Maneuver Malus'
+
+    @property
+    def description(self):
+        return 'Inflict a maneuver malus of %s on the opposing army.' % self.amount
 
     @property
     def key(self):
@@ -70,10 +83,13 @@ class InflictManeuverMalusEffect(Effect):
         self.expired = True
 
 class ManeuverMalusEffect(Effect):
-
     @property
     def name(self):
-        return 'Maneuver malus : %s' % self.amount
+        return 'Maneuver malus.'
+
+    @property
+    def description(self):
+        return 'Maneuver malus : %s.' % self.amount
 
     @property
     def key(self):

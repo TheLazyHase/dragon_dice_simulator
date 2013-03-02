@@ -73,6 +73,9 @@ dice_template_mapper()
 from models.army import army_mapper
 army_mapper()
 
+from models.game import game_mapper
+game_mapper()
+
 from models.position import position_mapper
 position_mapper()
 

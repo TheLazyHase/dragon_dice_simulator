@@ -22,6 +22,10 @@ class UnpreventableDamageEffect(Effect):
 
     @property
     def name(self):
+        return 'Smite'
+
+    @property
+    def description(self):
         return 'Inflict %s damages unpreventable by any mean' % self.amount
 
     @property
@@ -32,6 +36,10 @@ class ArmyUnpreventableDamageEffect(Effect):
 
     @property
     def name(self):
+        return 'Sneak Attack'
+
+    @property
+    def description(self):
         return 'Choose an army. Inflict %s damages unpreventable by any mean. Dragonkin killed are buried.' % self.amount
 
     @property

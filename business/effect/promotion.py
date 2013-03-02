@@ -21,6 +21,10 @@ from business.effect import Effect
 class PromotionSaveEffect(Effect):
     @property
     def name(self):
+        return 'Promotions'
+
+    @property
+    def description(self):
         return 'Promote up to %s units by foregoing the same number of save' % self.amount
 
     def before_resolution(self, army, opposing_armies):
@@ -34,6 +38,10 @@ class PromotionSaveEffect(Effect):
 class PromotionEffect(Effect):
     @property
     def name(self):
+        return 'Promotions'
+
+    @property
+    def description(self):
         return 'Promote %s units' % self.amount
 
     def before_resolution(self, army, opposing_armies):

@@ -23,6 +23,5 @@ class Flame(SpecialOnMelee):
     def name(self):
         return '%s Flame' % self.amount
 
-    @property
     def get_special(self):
         print 'NYI'

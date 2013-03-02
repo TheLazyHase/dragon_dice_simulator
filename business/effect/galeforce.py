@@ -18,23 +18,20 @@
 
 from business.effect import Effect
 
-class ReflectDamageEffect(Effect):
+class GaleforceEffect(Effect):
     @property
     def name(self):
-        return 'Bash'
+        return 'Galeforce'
 
     @property
     def description(self):
-        return 'Chose %s opposing unit or dragons that produced normal melee damage. Generate this amount of save and inflict this amount of damage to the chosen unit or dragon ; units may be rolled to save against thoses damages.' % self.amount
+        return 'Target %s ennemy army must reroll any Fly result on maneuver roll, counter-maneuver roll, maneuver avoidance roll, save roll or save avoidance roll until the start of your next turn' % self.amount
 
     @property
     def key(self):
-        return 'bash'
+        return 'galeforce'
 
     def before_resolution(self, army, opposing_armies):
-        print 'Placeholder - here the reflect damage should be handled'
+        print 'Placeholder - here the galeforce effect should be put on the opposing army'
         self.expired = True
-
-    def stack(self, effect):
-        return True
 

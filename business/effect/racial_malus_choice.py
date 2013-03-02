@@ -27,6 +27,10 @@ class RacialMalusChoiceEffect(Effect):
 
     @property
     def name(self):
+        return 'Race malus'
+
+    @property
+    def description(self):
         return '-%s malus to allocate between %s' % (self.amount, ', '.join(self.race))
 
     def stack(self, effect):

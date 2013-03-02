@@ -18,23 +18,20 @@
 
 from business.effect import Effect
 
-class ReflectDamageEffect(Effect):
+class IllusionEffect(Effect):
     @property
     def name(self):
-        return 'Bash'
+        return 'Illusion'
 
     @property
     def description(self):
-        return 'Chose %s opposing unit or dragons that produced normal melee damage. Generate this amount of save and inflict this amount of damage to the chosen unit or dragon ; units may be rolled to save against thoses damages.' % self.amount
+        return 'Target %s friendly army cannot be targeted by missile or magic' % self.amount
 
     @property
     def key(self):
-        return 'bash'
+        return 'illusion'
 
     def before_resolution(self, army, opposing_armies):
-        print 'Placeholder - here the reflect damage should be handled'
+        print 'Placeholder - here the galeforce effect should be put on the opposing army'
         self.expired = True
-
-    def stack(self, effect):
-        return True
 

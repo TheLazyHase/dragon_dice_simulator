@@ -38,7 +38,11 @@ class SaveableBrawl(Brawl):
 
     @property
     def name(self):
-        return 'Chosen unit suffer %s damages ; melee result on its save roll are inflicted to the %s' % (self.amount, self.unit.name)
+        return '%s\'s Coil' % self.unit.name
+
+    @property
+    def description(self):
+        return 'Chosen unit suffer %s damages ; melee result on its save roll are inflicted to %s.' % (self.amount, self.unit.name)
 
 
     @property
@@ -49,7 +53,11 @@ class UnsaveableBrawl(Brawl):
 
     @property
     def name(self):
-        return 'Chosen unit suffer %s damages with no save roll ; it can roll to counter-attack the %s' % (self.amount, self.unit.name)
+        return '%s\'s Hug' % self.unit.name
+
+    @property
+    def description(self):
+        return 'Chosen unit suffer %s damages with no save roll ; it can roll to counter-attack %s.' % (self.amount, self.unit.name)
 
 
     @property

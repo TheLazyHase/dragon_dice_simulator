@@ -22,11 +22,15 @@ class CantripEffect(Effect):
 
     @property
     def name(self):
+        return '%s Cantrip' % self.amount
+
+    @property
+    def description(self):
         return 'Cantrip : %s' % self.amount
 
     @property
     def key(self):
-        return 'ca'
+        return 'cantrip'
 
     def before_resolution(self, army, opposing_armies):
         print 'Placeholder - here the cantrip effect should be resolved'

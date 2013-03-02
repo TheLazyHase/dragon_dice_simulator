@@ -19,9 +19,12 @@
 from business.effect import Effect
 
 class TargetedKillEffect(Effect):
-
     @property
     def name(self):
+        return 'Slay'
+
+    @property
+    def description(self):
         return '%s targeted ennemy units must roll ID or die' % self.amount
 
     @property
@@ -33,9 +36,12 @@ class TargetedKillEffect(Effect):
         self.expired = True
 
 class TargetedManeuverKillByHealthEffect(Effect):
-
     @property
     def name(self):
+        return 'Stomp'
+
+    @property
+    def description(self):
         return 'Target unit(s) worth %s health or less  units must roll a maneuver or die' % self.amount
 
     @property
@@ -47,9 +53,12 @@ class TargetedManeuverKillByHealthEffect(Effect):
         self.expired = True
 
 class TargetedManeuverKillBuryingByHealthEffect(Effect):
-
     @property
     def name(self):
+        return 'Crush'
+
+    @property
+    def description(self):
         return 'Target unit(s) worth %s health or less  units must roll a maneuver or die. Thoses who die must roll a save or be buried.' % self.amount
 
     @property
@@ -61,9 +70,12 @@ class TargetedManeuverKillBuryingByHealthEffect(Effect):
         self.expired = True
 
 class TargetedKillBuryingByHealthEffect(Effect):
-
     @property
     def name(self):
+        return 'Poison'
+
+    @property
+    def description(self):
         return 'Target unit(s) worth %s health or less  units must roll a save or die. Thoses who die must roll a save or be buried.' % self.amount
 
     @property
@@ -75,9 +87,12 @@ class TargetedKillBuryingByHealthEffect(Effect):
         self.expired = True
 
 class TargetedBuryEffect(Effect):
-
     @property
     def name(self):
+        return 'Swallow'
+
+    @property
+    def description(self):
         return '%s targeted ennemy units must roll ID or be killed and buried' % self.amount
 
     @property
@@ -89,9 +104,12 @@ class TargetedBuryEffect(Effect):
         self.expired = True
 
 class TargetedDamageEffect(Effect):
-
     @property
     def name(self):
+        return 'Bullseye'
+
+    @property
+    def description(self):
         return '%s damage targeted as the active player choose' % self.amount
 
     @property
@@ -111,6 +129,10 @@ class TargetedUnsecableDamageEffect(Effect):
 
     @property
     def name(self):
+        return 'Kick'
+
+    @property
+    def description(self):
         return '%s chosen unit suffer %s damages' % (self.amount, self.increment)
 
     def stack(self, effect):
@@ -140,6 +162,10 @@ class TargetedUnsecableBuryingDamageEffect(Effect):
 
     @property
     def name(self):
+        return 'Flaming Arrows'
+
+    @property
+    def description(self):
         return '%s chosen unit suffer %s damages ; killed unit must save or be buried' % (self.amount, self.increment)
 
     def stack(self, effect):
@@ -169,6 +195,10 @@ class TargetedUnsecableInstantBuryingDamageEffect(Effect):
 
     @property
     def name(self):
+        return 'Gore'
+
+    @property
+    def description(self):
         return '%s chosen unit suffer %s damages ; killed unit are buried' % (self.amount, self.increment)
 
     def stack(self, effect):
@@ -193,6 +223,10 @@ class TargetedIDKillEffect(Effect):
 
     @property
     def name(self):
+        return 'Decapitate/Impale'
+
+    @property
+    def description(self):
         return 'After save are rolled, as an Instant effect, choose and kill %s unit(s) that rolled an ID' % (self.amount)
 
 
@@ -208,6 +242,10 @@ class TargetedIDKillByHealthEffect(Effect):
 
     @property
     def name(self):
+        return 'Choke'
+
+    @property
+    def description(self):
         return 'After save are rolled, as an Instant effect, choose and kill up to %s worth of health unit(s) that rolled an ID' % (self.amount)
 
 
@@ -220,6 +258,10 @@ class TargetedIDKillByHealthEffect(Effect):
         self.expired = True
 
 class TargetedJawDragonKillEffect(Effect):
+
+    @property
+    def name(self):
+        return 'Decapitate/Impale'
 
     def __init__(self, amount, default_damage):
         self.amount = amount
@@ -237,7 +279,7 @@ class TargetedJawDragonKillEffect(Effect):
         return stackable
 
     @property
-    def name(self):
+    def description(self):
         return 'Kill up to %s dragon(s) that rolled jaw ; if there is not enough targets, inflict %s damage to any dragon' % (self.amount, self.default_damage)
 
 

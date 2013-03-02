@@ -17,6 +17,7 @@
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
 from business.dice.face import Face, SAI
+from business.effect import GaleforceEffect
 
 class Galeforce(SAI, Face):
     @property
@@ -28,4 +29,7 @@ class Galeforce(SAI, Face):
 
     @property
     def on_special(self):
-        print 'NYI'
+        value = None
+        if self.type_roll.is_action:
+            value = GaleforceEffect(self.amount)
+        return value

@@ -22,11 +22,15 @@ class AttuneEffect(Effect):
 
     @property
     def name(self):
-        return 'The magic object and %s dice produce magic of any color' % self.amount
+        return '%s Attune' % self.amount
+
+    @property
+    def description(self):
+        return 'The magic object and %s dice produce magic of any color.' % self.amount
 
     @property
     def key(self):
-        return 'at'
+        return 'attune'
 
     def before_resolution(self, army, opposing_armies):
         print 'Placeholder - here the attune effect should be resolved'

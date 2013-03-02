@@ -21,6 +21,10 @@ from business.effect import Effect
 class RegenerationEffect(Effect):
     @property
     def name(self):
+        return 'Regeneration'
+
+    @property
+    def description(self):
         return 'Bring back up to %s health\'s worth of units from the dead unit area to this army by foregoing %s save' % self.amount
 
     def before_resolution(self, army, opposing_armies):

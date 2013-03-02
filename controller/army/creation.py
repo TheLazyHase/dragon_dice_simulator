@@ -20,6 +20,7 @@ from pyramid.view import view_config
 from controller import BaseController
 
 from business.army.army import Army
+from business.game.player import PlayerGame
 from business.army.roll import *
 from business.army.position import ArmyPosition
 from business.dice.dice import Dice
@@ -34,9 +35,10 @@ import re
 class ArmiesController(BaseController):
     @view_config(route_name='army_selection', renderer='controller.army:templates/selection.mako')
     def army_selection(self):
-        army_list = Army.get_all()
+        player_game = PlayerGame.get_by_name('Me')
+        army_list = player_game.armies
         if (len(army_list) > 0):
-            return_value = {'existing': True, 'choices': [{'id': army.id, 'name': army.name} for army in Army.get_all()]}
+            return_value = {'existing': True, 'choices': [{'id': army.id, 'name': army.name} for army in army_list]}
         else:
             return_value = {'existing': False}
         return return_value
@@ -46,6 +48,8 @@ class ArmiesController(BaseController):
         army_position = ArmyPosition.get_by_id(1)
         army = Army(army_position)
         army.name = self.request.POST['army_name']
+        player_game = PlayerGame.get_by_name('Me')
+        player_game.armies.append(army)
         army.save()
         return self.army_edition(army, ('Army named %s succesfully created !' % army.name))
 

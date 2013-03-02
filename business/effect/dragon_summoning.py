@@ -27,6 +27,10 @@ class DragonSummoningEffect(Effect):
 
     @property
     def name(self):
+        return '%s %s Summon Dragon' % (self.amount, '/'.join([element.name for element in unit.elements]))
+
+    @property
+    def description(self):
         return 'Summon %s non-white dragon(s) of color %s to any terrain ' % (self.amount, ' or '.join([element.name for element in unit.elements]))
 
     @property

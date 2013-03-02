@@ -41,8 +41,9 @@ class Flurry(SAI, Melee):
             value = True
         return value
 
+    @property
     def on_instant(self):
         value = None
         if self.type_roll.is_dragon:
-            value = FlurryRerollEffect(self.amount)
+            value = FlurryRerollEffect(self.amount, self.dice)
         return value

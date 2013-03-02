@@ -21,6 +21,10 @@ from business.effect import Effect
 class EscapeAndSaveEffect(Effect):
     @property
     def name(self):
+        return 'Vanish'
+
+    @property
+    def description(self):
         return 'This unit generate %s save, and then may be moved to another terrain or to the reserve without losing thoses' % self.amount
 
     @property
@@ -37,11 +41,15 @@ class EscapeAndSaveEffect(Effect):
 class EscapeItemEffect(Effect):
     @property
     def name(self):
+        return 'Wayfare'
+
+    @property
+    def description(self):
         return 'This item and one unit able to carry it may be moved to another terrain or to the reserve'
 
     @property
     def key(self):
-        return 'escape_save'
+        return 'escape_item_save'
 
     def before_resolution(self, army, opposing_armies):
         print 'Placeholder - here the surprise effect should be put on the opposing army'

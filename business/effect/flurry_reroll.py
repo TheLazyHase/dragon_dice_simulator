@@ -27,7 +27,11 @@ class FlurryRerollEffect(Effect):
 
     @property
     def name(self):
-        return 'Can produce %s save, or %s melee and reroll the dice' %(self.amount, self.amount, self.unit.name)
+        return '%s Flurry' % self.unit.name
+
+    @property
+    def description(self):
+        return 'Can produce %s save, or %s melee and reroll the dice %s' %(self.amount, self.amount, self.unit.name)
 
     @property
     def key(self):

@@ -22,6 +22,10 @@ class UnsaveableDamageEffect(Effect):
 
     @property
     def name(self):
+        return 'Inflict damage without save roll'
+
+    @property
+    def description(self):
         return 'Damage on which only magic save count : %s' % self.amount
 
     @property

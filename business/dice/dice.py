@@ -110,7 +110,15 @@ class Dice(object):
         return self.get_result(Face.ICON_SAVE)
 
     @property
-    def special_effect(self):
+    def on_instant(self):
+        effect = []
+        for active_face in self.active_faces:
+            if (active_face.on_instant != None):
+                effect.append(active_face.on_instant)
+        return effect
+
+    @property
+    def on_special(self):
         effect = []
         for active_face in self.active_faces:
             if (active_face.on_special != None):

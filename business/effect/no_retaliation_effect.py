@@ -21,6 +21,10 @@ from business.effect import Effect
 class InflictNoRetaliationEffect(Effect):
     @property
     def name(self):
+        return 'Surprise'
+
+    @property
+    def description(self):
         return 'Opposing army cannot counter-attack'
 
     @property

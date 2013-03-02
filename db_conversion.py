@@ -267,10 +267,14 @@ for dice_info in dice_result:
         for face_info in face_result:
             
             if face_info['Icon_ID'] == 'ID' and name == 'Wolf Pack':
-                face = conversion_icon[face_info['Icon_ID']]
+                face = 'GroupID'
             else:
                 face = conversion_icon[face_info['Icon_ID']]
-            face = DiceFaceTemplate(dice, face_info['SideNumber'], conversion_icon[face_info['Icon_ID']], face_info['Quantity'], face_info['Image'])
+            if face_info['Icon_ID'] == 'GALEFORCE' or face_info['Icon_ID'] == 'ILLUSION':
+                amount = 1
+            else:
+                amount = face_info['Quantity']
+            face = DiceFaceTemplate(dice, face_info['SideNumber'], conversion_icon[face_info['Icon_ID']], amount, face_info['Image'])
             faces.append(face)
             DBSession.add(face)
         DBSession.flush()

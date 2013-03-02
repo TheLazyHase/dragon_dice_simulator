@@ -21,7 +21,11 @@ from business.effect import Effect
 class ElevateSaveDoublingEffect(Effect):
     @property
     def name(self):
-        return 'Double the save result of %s units' % self.amount
+        return '%s Elevate' % self.amount
+
+    @property
+    def description(self):
+        return 'Double the save result of %s units.' % self.amount
 
     @property
     def key(self):
@@ -37,7 +41,11 @@ class ElevateSaveDoublingEffect(Effect):
 class ElevateMissileDoublingEffect(Effect):
     @property
     def name(self):
-        return 'Double the missile result of %s units' % self.amount
+        return '%s Elevate' % self.amount
+
+    @property
+    def description(self):
+        return 'Double the missile result of %s units.' % self.amount
 
     @property
     def key(self):
@@ -53,6 +61,10 @@ class ElevateMissileDoublingEffect(Effect):
 class ElevateSaveOrMissileDoublingEffect(Effect):
     @property
     def name(self):
+        return '%s Elevate' % self.amount
+
+    @property
+    def description(self):
         return 'Double the missile or save result of %s units' % self.amount
 
     @property

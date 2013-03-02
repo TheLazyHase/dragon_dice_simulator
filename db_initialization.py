@@ -16,6 +16,29 @@ metadata.drop_all()
 DBSession.flush()
 metadata.create_all()
 
+from business.game import Game
+
+game = Game('The game you just lost')
+DBSession.add(game)
+
+from business.game.player import PlayerGame
+
+player = PlayerGame('Me')
+DBSession.add(player)
+
+player.game = game
+
+from business.army.army import Army
+
+player.buried_army = Army('Buried stuff')
+DBSession.add(player.buried_army)
+player.dead_army = Army('Dead stuff')
+DBSession.add(player.dead_army)
+player.reserve_army = Army('Reserve stuff')
+DBSession.add(player.reserve_army)
+player.summon_army = Army('Summonable stuff')
+DBSession.add(player.summon_army)
+
 from business.element import Element
 
 blue = Element('Blue', 'Air', 'a')

@@ -23,7 +23,5 @@ class Charm(SpecialOnMelee):
     def name(self):
         return 'Charm'
 
-
-    @property
     def get_special(self):
         print 'NYI'
