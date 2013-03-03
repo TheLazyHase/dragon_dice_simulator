@@ -36,13 +36,7 @@ class DiceTemplate(object):
         self.autosave = autosave
 
         self.elements = []
-
-    def get_instancied_faces(self, dice):
-        faces = []
-        for face_template in self.faces:
-            faces.append(face_template.get_instance(dice))
-        return faces        
-
+ 
     @property
     def role_name(self):
         return self.role.name

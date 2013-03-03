@@ -46,9 +46,8 @@ class Face(object):
         ICON_SAVE: 0,
     }
 
-    def __init__(self, amount, dice):
+    def __init__(self, amount):
         self.amount = amount
-        self.dice = dice
 
     @property   
     def type(self):

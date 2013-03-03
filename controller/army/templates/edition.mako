@@ -89,10 +89,12 @@ div.block .input, div.block .picture{
     <form method="get" action="/army/${army_id}/roll/maneuver" style="display: inline-block;">
         <input type="submit" value="Maneuver Roll" />
     </form>
-    <form method="get" action="/army/${army_id}/roll/melee_save" style="display: inline-block;">
-        <input type="submit" value="Melee Save Roll" />
-    </form>
     <form method="get" action="/army/${army_id}/roll/missile_save" style="display: inline-block;">
         <input type="submit" value="Missile Save Roll" />
+    </form>
+    <form method="POST" action="/action/save" style="display: inline-block;">
+        <input type="hidden" name="chosen_army" value="${army_id}" />
+        <input type="text" name="damage" value="10" />
+        <input type="submit" value="Melee Save action" />
     </form>
 </div>

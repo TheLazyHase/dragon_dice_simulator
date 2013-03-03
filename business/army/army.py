@@ -225,6 +225,10 @@ class Army(object):
                         self.special_effect.append(effect)
         return self
 
+    def set_roll_type(self, type_roll):
+        for dice in self.components:
+            dice.set_roll_type(type_roll)
+
     def get_rolled_effect(self):
 
         return instant_effect

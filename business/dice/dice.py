@@ -23,8 +23,7 @@ from face import Face
 from sqlalchemy.orm import reconstructor
 
 class Dice(object):
-    def __init__(self, template, army, nickname=''):
-        self.active_faces = None
+    def __init__(self, template, army, nickname=''): 
         self.nickname = nickname
         self.template = template
         self.army = army
@@ -32,7 +31,7 @@ class Dice(object):
 
     @reconstructor
     def hydrate(self):
-        self.faces = self.template.get_instancied_faces(self)
+        self.faces = self.template.faces
         self.autoresult = {
             Face.ICON_MELEE: self.template.automelee,
             Face.ICON_MISSILE: self.template.automissile,
@@ -45,14 +44,18 @@ class Dice(object):
         self.active_faces = []
 
         active_face = choice(self.faces)
-        active_face.type_roll = type_roll
+        active_face.face.type_roll = type_roll
         self.active_faces.append(active_face)
         #Reroll ? (rend, for example)
-        while(active_face.is_rerolled):
+        while(active_face.face.is_rerolled):
             active_face = choice(self.faces)
-            active_face.type_roll = type_roll
+            active_face.face.type_roll = type_roll
             self.active_faces.append(active_face)
         return self
+
+    def set_roll_type(self, type_roll):
+        for face in self.active_faces:
+            face.face.type_roll = type_roll
 
     @property
     def name(self):
@@ -88,8 +91,8 @@ class Dice(object):
     def get_result(self, icon_type, result_type = None):
         result = 0
         for active_face in self.active_faces:
-            if (result_type == None or result_type == active_face.type):
-                result += active_face.icon_by_type(icon_type)
+            if (result_type == None or result_type == active_face.face.type):
+                result += active_face.face.icon_by_type(icon_type)
         if (result < 0):
             result = 0
         return result
@@ -113,14 +116,14 @@ class Dice(object):
     def on_instant(self):
         effect = []
         for active_face in self.active_faces:
-            if (active_face.on_instant != None):
-                effect.append(active_face.on_instant)
+            if (active_face.face.on_instant != None):
+                effect.append(active_face.face.on_instant)
         return effect
 
     @property
     def on_special(self):
         effect = []
         for active_face in self.active_faces:
-            if (active_face.on_special != None):
-                effect.append(active_face.on_special)
+            if (active_face.face.on_special != None):
+                effect.append(active_face.face.on_special)
         return effect

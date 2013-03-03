@@ -16,27 +16,9 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
-import json
+class User(object):
 
-from business.dice import face as faceDefinition
-from business.dice.dice import Dice
+    def __init__(self, user_id, name='Me'):
+        self.id = user_id
+        self.name = name
 
-from sqlalchemy.orm import reconstructor
-
-class DiceFaceTemplate(object):
-    def __init__(self, dice, side_number, class_name, amount, picture):
-        self.dice = dice
-        self.side_number = side_number
-        self.class_name = class_name
-        self.amount = amount
-        self.picture = picture
-        self.hydrate()
-
-    @reconstructor
-    def hydrate(self):
-        face_class = getattr(faceDefinition, self.class_name)
-        self.face = face_class(self.amount)
-
-    @property
-    def name(self):
-        return self.face.name

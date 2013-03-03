@@ -20,8 +20,19 @@ from wsgiref.simple_server import make_server
 from pyramid.config import Configurator
 from pyramid.response import Response
 
+from pyramid.authentication import AuthTktAuthenticationPolicy
+from pyramid.authorization import ACLAuthorizationPolicy
+from business.user.root import Root, groupfinder
+
 if __name__ == '__main__':
-    config = Configurator()
+    auth_policy = ACLAuthorizationPolicy()
+    authentication_policy = AuthTktAuthenticationPolicy('secrets', hashalg='sha512', callback=groupfinder)
+
+    config = Configurator(
+        authentication_policy=authentication_policy,
+        authorization_policy=auth_policy,
+        root_factory=Root
+    )
 
     #SQLAlchemy stuff
     from models import (
@@ -38,12 +49,24 @@ if __name__ == '__main__':
     import models
 
     #Add route here
-    config.add_route('army_selection', '/army/selection')
+    config.add_route('authentication', '/authenticate')
+    config.add_route('login', '/login')
+    config.add_route('logout', '/logout')
+
+    config.add_route('army_selection', '/army/selection', request_method="GET")
+    config.add_route('do_army_selection', '/army/selection', request_method="POST")
     config.add_route('army_creation', '/army/new', request_method="POST")
     config.add_route('army_edition', '/army/{id:[0-9]+}/edition', request_method="GET")
     config.add_route('army_edition_alias', '/army/edition', request_method="GET")
     config.add_route('do_army_edition', '/army/{id:[0-9]+}/edition', request_method="POST")
+
     config.add_route('unit_view', '/unit/{id:[0-9]+}', request_method="GET")
+
+    config.add_route('initiate_save_action', '/action/save', request_method="POST")
+    config.add_route('save_action', '/action/save/{id:[0-9]+}')
+    config.add_route('save_action_step_one', '/action/save/{id:[0-9]+}/step/1', request_method="GET")
+    config.add_route('save_action_step_two', '/action/save/{id:[0-9]+}/step/2', request_method="GET")
+    config.add_route('save_action_step_three', '/action/save/{id:[0-9]+}/step/3/{damage:[0-9]+}', request_method="GET")
 
     config.add_route('dragon_roll', '/army/{id:[0-9]+}/roll/dragon', request_method="GET")
     config.add_route('melee_roll', '/army/{id:[0-9]+}/roll/melee', request_method="GET")

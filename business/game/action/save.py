@@ -20,5 +20,8 @@ from business.game.action import Action
 
 class SaveAction(Action):
 
-    def __init__(self, damage):
+    def __init__(self, game, army, damage=1):
+        self.game = game
+        self.army = army
         self.damage = damage
+        self.step = 0

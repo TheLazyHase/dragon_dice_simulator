@@ -33,33 +33,10 @@ from models import DBSession
 import re
 
 class ArmiesController(BaseController):
-    @view_config(route_name='army_selection', renderer='controller.army:templates/selection.mako')
-    def army_selection(self):
-        player_game = PlayerGame.get_by_name('Me')
-        army_list = player_game.armies
-        if (len(army_list) > 0):
-            return_value = {'existing': True, 'choices': [{'id': army.id, 'name': army.name} for army in army_list]}
-        else:
-            return_value = {'existing': False}
-        return return_value
-
-    @view_config(route_name='army_creation', renderer='controller.army:templates/edition.mako')
-    def do_army_creation(self):
-        army_position = ArmyPosition.get_by_id(1)
-        army = Army(army_position)
-        army.name = self.request.POST['army_name']
-        player_game = PlayerGame.get_by_name('Me')
-        player_game.armies.append(army)
-        army.save()
-        return self.army_edition(army, ('Army named %s succesfully created !' % army.name))
-
-    @view_config(route_name='army_edition', renderer='controller.army:templates/edition.mako')
-    @view_config(route_name='army_edition_alias', renderer='controller.army:templates/edition.mako')
+    @view_config(route_name='army_edition',  permission='use', renderer='controller.army:templates/edition.mako')
     def army_edition(self, army=None, special_message=''):
         if (army == None):
             army_id = self.request.matchdict.get('id', 0)
-            if army_id == 0:
-                army_id = self.request.GET['chosen_army']
             army = Army.get_by_id(army_id)
         
         dice_list = [{'id': dice.id, 'name': dice.name, 'picture': dice.template.picture} for dice in army.components]
@@ -79,7 +56,7 @@ class ArmiesController(BaseController):
 
         return {'special_message': special_message, 'races': template_list, 'dices': dice_list, 'army_id': army.id}
 
-    @view_config(route_name='do_army_edition', renderer='controller.army:templates/edition.mako')
+    @view_config(route_name='do_army_edition',  permission='use', renderer='controller.army:templates/edition.mako')
     def do_army_edition(self, army=None, special_message=''):
         army = Army.get_by_id(self.request.matchdict.get('id'))
 

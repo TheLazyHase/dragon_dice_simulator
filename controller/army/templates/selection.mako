@@ -2,7 +2,7 @@
 
 % if existing:
 <div style="border: 1px solid">
-    <form method="GET" action="/army/edition">
+    <form method="POST" action="/army/selection">
         <p>Choose your army below :</p>
         <select name="chosen_army">
             % for army in choices:

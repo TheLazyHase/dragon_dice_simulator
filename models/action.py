@@ -16,6 +16,7 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Dragon dice simulator.  If not, see <http://www.gnu.org/licenses/>.
 
+
 from sqlalchemy import (
     MetaData,
     Table,
@@ -27,36 +28,37 @@ from sqlalchemy import (
 
 from models import metadata, DBSession
 
-dice_table = Table('dice', metadata,
+action_table = Table('action', metadata,
     Column('id', Integer, primary_key=True),
-    Column('nickname', String(50)),
+    Column('type', Integer, nullable=False),
+    Column('game_id', Integer, ForeignKey('game.id')),
     Column('army_id', Integer, ForeignKey('army.id')),
-    Column('template_id', Integer, ForeignKey('dice_template.id'))
+    Column('step', Integer)
 )
 
-dice_active_face_table = Table('dice_active_face', metadata,
-    Column('id', Integer, primary_key=True),
-    Column('dice_id', Integer, ForeignKey('dice.id')),
-    Column('dice_face_template_id', Integer, ForeignKey('dice_face_template.id'))
+save_action_table = Table('save_action', metadata,
+    Column('action_id', Integer, ForeignKey('action.id'), primary_key=True),
+    Column('damage', Integer)
 )
 
 
-def dice_mapper():
+def action_mapper():
     from models import get_all, get_by_id, save, delete
-    from business.dice.dice import Dice
-    from business.dice.dice_template import DiceTemplate
-    from business.dice.dice_face_template import DiceFaceTemplate
+    from business.game.action import Action
+    from business.game import Game
     from business.army.army import Army
-    from sqlalchemy.orm import mapper, relationship
+    from sqlalchemy.orm import mapper, relationship, backref
 
-    Dice.get_all = classmethod(get_all)
-    Dice.get_by_id = classmethod(get_by_id)
-    Dice.save = save
-    Dice.delete = delete
+    Action.get_all = classmethod(get_all)
+    Action.get_by_id = classmethod(get_by_id)
+    Action.save = save
+    Action.delete = delete
 
-    mapper(Dice, dice_table, properties={
-        'army': relationship(Army, backref='components'),
-        'template': relationship(DiceTemplate),
-        'active_faces': relationship(DiceFaceTemplate, secondary=dice_active_face_table)
-    })
+    mapper(Action, action_table, properties={
+        'game': relationship(Game, backref='current_action'),
+        'army': relationship(Army, backref=backref('current_action', uselist=False))
+    }, polymorphic_on=action_table.c.type, polymorphic_identity=0)
 
+    from business.game.action.save import SaveAction
+
+    mapper(SaveAction, save_action_table, inherits=Action, polymorphic_identity=1)

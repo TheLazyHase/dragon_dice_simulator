@@ -24,5 +24,3 @@ class Game(object):
         self.players = []
         self.player_turn = 0
         self.active_player = 0
-
-        self.current_action = None

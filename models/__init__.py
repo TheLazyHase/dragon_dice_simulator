@@ -76,6 +76,9 @@ army_mapper()
 from models.game import game_mapper
 game_mapper()
 
+from models.action import action_mapper
+action_mapper()
+
 from models.position import position_mapper
 position_mapper()
 
