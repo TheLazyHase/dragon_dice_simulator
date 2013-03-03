@@ -1,3 +1,6 @@
+<%inherit file='controller:templates/base.mako' />
+
+
 <div style="border: 1px solid">
     Roll:
     % for result in results:

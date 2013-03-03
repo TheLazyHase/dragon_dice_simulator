@@ -249,7 +249,13 @@ for dice_info in dice_result:
         else:
             name = dice_info['Name']
 
-        dice = DiceTemplate(name, dice_info['Description'], dice_type, race, role)
+        #Dragonkin autosave
+        if race.id == 14:
+            autosave = dice_info['Health']
+        else:
+            autosave = 0
+
+        dice = DiceTemplate(name, dice_info['Description'], dice_type, race, role, autosave=autosave)
 
         DBSession.add(dice)
 

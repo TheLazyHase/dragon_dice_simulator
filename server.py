@@ -66,7 +66,6 @@ if __name__ == '__main__':
     config.add_route('save_action', '/action/save/{id:[0-9]+}')
     config.add_route('save_action_step_one', '/action/save/{id:[0-9]+}/step/1', request_method="GET")
     config.add_route('save_action_step_two', '/action/save/{id:[0-9]+}/step/2', request_method="GET")
-    config.add_route('save_action_step_three', '/action/save/{id:[0-9]+}/step/3/{damage:[0-9]+}', request_method="GET")
 
     config.add_route('dragon_roll', '/army/{id:[0-9]+}/roll/dragon', request_method="GET")
     config.add_route('melee_roll', '/army/{id:[0-9]+}/roll/melee', request_method="GET")
