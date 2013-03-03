@@ -1,4 +1,4 @@
-<%inherit file='base.mako' />
+<%inherit file='controller:templates/base.mako' />
 
 <style>
 div.block{

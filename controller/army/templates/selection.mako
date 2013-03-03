@@ -1,4 +1,4 @@
-<%inherit file='base.mako' />
+<%inherit file='controller:templates/base.mako' />
 
 % if existing:
 <div style="border: 1px solid">

@@ -1,3 +1,3 @@
-<%inherit file='base.mako' />
+<%inherit file='controller:templates/base.mako' />
 
 ${ name | n }
